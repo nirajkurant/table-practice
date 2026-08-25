@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Table Multiple Practice — Clean</title>
+<style>
+:root{--bg:#f6f8fc;--card:rgba(255,255,255,.94);--text:#111827;--muted:#6b7280;--line:#e5e7eb;--primary:#4f46e5;--primary2:#7c3aed;--success:#16a34a;--danger:#dc2626;--shadow:0 12px 35px rgba(31,41,55,.08)}
+body{margin:0;min-height:100vh;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;color:var(--text);background:radial-gradient(circle at 10% 0%,rgba(99,102,241,.12),transparent 32%),radial-gradient(circle at 100% 20%,rgba(124,58,237,.10),transparent 30%),var(--bg)}
+body.dark{--bg:#0b1020;--card:rgba(17,24,39,.95);--text:#f3f4f6;--muted:#9ca3af;--line:#374151;--shadow:0 14px 38px rgba(0,0,0,.28)}
+*{box-sizing:border-box}.app{max-width:620px;margin:auto;min-height:100vh;padding:18px 14px 32px}
+.hero{text-align:center;padding:0 6px 18px}.top-controls{height:34px;display:flex;justify-content:flex-end}.quick-controls{display:flex;gap:6px}
+.icon-btn,.lang-btn{width:34px;height:32px;border-radius:10px;padding:0;background:rgba(255,255,255,.75);color:#334155;border:1px solid #e5e7eb;font-size:15px;font-weight:800}
+.lang-btn{font-size:11px}body.dark .icon-btn,body.dark .lang-btn{background:#182033;color:#e5e7eb;border-color:#374151}
+.logo{width:58px;height:58px;margin:0 auto 10px;border-radius:18px;display:grid;place-items:center;font-size:29px;background:linear-gradient(135deg,var(--primary),var(--primary2));box-shadow:0 10px 25px rgba(79,70,229,.25)}
+h1{margin:0;font-size:27px;line-height:1.15;letter-spacing:-.6px}.sub{margin:7px 0 0;color:var(--muted);font-size:13px}
+.card{background:var(--card);border:1px solid rgba(255,255,255,.8);border-radius:22px;padding:18px;box-shadow:var(--shadow);margin-bottom:14px;backdrop-filter:blur(10px)}
+.section-title{font-size:14px;font-weight:800;margin-bottom:12px}.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+label{display:block;font-size:12px;font-weight:800;color:var(--muted);margin:0 0 7px 3px}
+select,input,button{width:100%;height:50px;border-radius:14px;font-size:16px;font-family:inherit}
+select,input{border:1px solid var(--line);padding:0 13px;background:#fff;color:var(--text);outline:none;transition:.18s}
+body.dark select,body.dark input{background:#111827;color:#f3f4f6;border-color:#374151}
+select:focus,input:focus{border-color:#818cf8;box-shadow:0 0 0 4px rgba(99,102,241,.11)}
+button{border:0;font-weight:800;cursor:pointer;transition:transform .12s,box-shadow .18s}button:active{transform:scale(.985)}
+.timer-settings{margin-top:13px;display:flex;align-items:center;gap:9px}.timer-settings label{margin:0}.timer-settings select{height:40px;width:110px;font-size:13px}
+.practice{padding:22px 18px 18px;text-align:center}.badge{display:inline-flex;align-items:center;padding:6px 10px;border-radius:999px;background:#eef2ff;color:#4338ca;font-size:11px;font-weight:800;margin-bottom:8px}
+body.dark .badge{background:#27224a;color:#c4b5fd}.timer-display{font-variant-numeric:tabular-nums;font-size:14px;font-weight:900;color:var(--primary);margin:0 0 7px}
+.number{font-size:58px;font-weight:950;letter-spacing:-2px;line-height:1.05;margin:3px 0 6px}.hint{color:var(--muted);font-size:12px;margin-bottom:15px}
+.answerRow{display:grid;grid-template-columns:1fr 34px 1fr;gap:8px;align-items:center}.answerRow input{height:56px;text-align:center;font-size:23px;font-weight:850;background:#fafafa}.answerRow .x{font-size:24px;font-weight:900;color:#9ca3af}
+.check{margin-top:11px;color:#fff;background:var(--text);box-shadow:0 7px 18px rgba(17,24,39,.14)}.next{margin-top:9px;background:#f1f5f9;color:#334155}
+body.dark .next{background:#182033;color:#e5e7eb}.feedback{min-height:31px;margin-top:10px;font-size:14px;font-weight:800}.good{color:var(--success)}.bad{color:var(--danger)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.stat{background:#f8fafc;border:1px solid #eef2f7;border-radius:15px;padding:12px 7px}
+body.dark .stat{background:#182033;border-color:#263248}.stat b{display:block;font-size:22px;line-height:1.1}.stat span{font-size:10px;color:var(--muted);font-weight:700}
+.small{font-size:11px;color:var(--muted);text-align:center;margin-top:11px;line-height:1.45}
+@media(max-width:380px){.app{padding-left:10px;padding-right:10px}h1{font-size:24px}.number{font-size:50px}}
+
+.brand{text-align:center;margin:2px 0 8px}
+.brand-link{font-size:17px;font-weight:800;letter-spacing:.1px;color:#4338ca;text-decoration:none}
+.brand-link:hover{text-decoration:underline}
+body.dark .brand-link{color:#a5b4fc}
+
+body.dark .check{
+  color:#fff;
+  background:linear-gradient(135deg,#6366f1,#8b5cf6);
+  box-shadow:0 8px 20px rgba(99,102,241,.30);
+}
+body.dark .next{
+  color:#e5e7eb;
+  background:#202a3d;
+  border:1px solid #3b4a63;
+  box-shadow:0 5px 14px rgba(0,0,0,.20);
+}
+body:not(.dark) .next{
+  background:#e8edff;
+  color:#3730a3;
+  border:1px solid #c7d2fe;
+  box-shadow:0 5px 14px rgba(79,70,229,.10);
+}
+
+
+.welcome-overlay{
+  position:fixed;inset:0;z-index:9999;
+  display:flex;align-items:center;justify-content:center;
+  padding:18px;background:rgba(15,23,42,.58);
+  backdrop-filter:blur(7px);
+}
+.welcome-overlay.hidden{display:none}
+.welcome-box{
+  width:min(100%,430px);max-height:90vh;overflow:auto;
+  background:var(--card);color:var(--text);
+  border:1px solid var(--line);border-radius:24px;
+  padding:22px;box-shadow:0 25px 70px rgba(0,0,0,.28);
+}
+.welcome-icon{
+  width:54px;height:54px;border-radius:17px;margin:0 auto 10px;
+  display:grid;place-items:center;font-size:27px;
+  background:linear-gradient(135deg,var(--primary),var(--primary2));
+}
+.welcome-title{text-align:center;font-size:23px;font-weight:900;margin:0 0 5px}
+.welcome-text{text-align:center;color:var(--muted);font-size:13px;line-height:1.5;margin:0 0 18px}
+.welcome-field{margin-top:13px}
+.welcome-field label{margin-bottom:7px}
+.welcome-box select{height:46px}
+.welcome-ok{
+  margin-top:18px;color:#fff;
+  background:linear-gradient(135deg,var(--primary),var(--primary2));
+  box-shadow:0 9px 20px rgba(79,70,229,.22);
+}
+.welcome-note{text-align:center;color:var(--muted);font-size:10px;margin:10px 0 0}
+
+</style>
+</head>
+<body>
+
+<div class="welcome-overlay" id="welcomeOverlay">
+  <div class="welcome-box">
+    <div class="welcome-icon">🧮</div>
+    <h2 class="welcome-title" id="welcomeTitle">Welcome to Sarkari Pen</h2>
+    <p class="welcome-text" id="welcomeText">
+      शुरू करने से पहले अपनी पसंद की language, theme और practice timer चुनें।
+      ये settings आगे आपकी practice में default रहेंगी।
+    </p>
+
+    <div class="welcome-field">
+      <label for="welcomeLang" id="welcomeLangLabel">Language</label>
+      <select id="welcomeLang">
+        <option value="hi">हिंदी (Hindi)</option>
+        <option value="en">English</option>
+      </select>
+    </div>
+
+    <div class="welcome-field">
+      <label for="welcomeTheme" id="welcomeThemeLabel">Theme</label>
+      <select id="welcomeTheme">
+        <option value="light">☀️ Light Mode</option>
+        <option value="dark">🌙 Dark Mode</option>
+      </select>
+    </div>
+
+    <div class="welcome-field">
+      <label for="welcomeTimer" id="welcomeTimerLabel">Practice Timer</label>
+      <select id="welcomeTimer">
+        <option value="60">1 minute</option>
+        <option value="120">2 minutes</option>
+        <option value="300">5 minutes</option>
+        <option value="600">10 minutes</option>
+        <option value="0">Off</option>
+      </select>
+    </div>
+
+    <button class="welcome-ok" id="welcomeOk" onclick="saveWelcomeSettings()">OK — Start Practice</button>
+    <div class="welcome-note" id="welcomeNote">आप बाद में ऊपर के buttons से language और theme बदल सकते हैं।</div>
+  </div>
+</div>
+
+<div class="app">
+  <div class="brand"><a class="brand-link" href="https://t.me/@sarkaripen" target="_blank" rel="noopener noreferrer">Sarkari Pen</a></div>
+  <div class="top-controls"><div></div><div class="quick-controls"><button type="button" class="icon-btn" id="themeBtn" onclick="toggleTheme()" aria-label="Toggle dark mode">🌙</button><button type="button" class="lang-btn" id="langBtn" onclick="toggleLanguage()">EN</button></div></div>
+  <div class="hero">
+  <div class="logo">🧮</div>
+  <h1 id="titleText">🧮 Table Multiple Practice</h1>
+  <p class="sub">दिए गए number के किसी भी valid × multiple को खोजो</p>
+  </div>
+
+  <div class="card">
+    <div class="row">
+      <div>
+        <label for="from">Table From</label>
+        <select id="from"></select>
+      </div>
+      <div>
+        <label for="to">Table To</label>
+        <select id="to"></select>
+      </div>
+    </div>
+    <div class="timer-settings"><label for="timerSelect">Timer</label><select id="timerSelect" onchange="resetTimer()"><option value="60">1 min</option><option value="120">2 min</option><option value="300">5 min</option><option value="600">10 min</option><option value="0">Off</option></select></div>
+    <div class="small" style="margin-top:8px">
+      हर table का अभ्यास केवल ×1 से ×10 तक होगा। उदाहरण: 10 × 10 के बाद 10 × 11, 10 × 12… नहीं आएगा।
+    </div>
+  </div>
+
+  <div class="card practice">
+    <div class="badge">⚡ QUICK PRACTICE</div>
+    <div class="timer-display" id="timerDisplay">⏱ 01:00</div>
+    <div class="hint" id="hintText">इस number को दो numbers के गुणन के रूप में लिखो</div>
+    <div class="number" id="number">—</div>
+    <div class="answerRow">
+      <input id="a" type="number" inputmode="numeric" placeholder="00" aria-label="पहला number">
+      <div class="x">×</div>
+      <input id="b" type="number" inputmode="numeric" placeholder="0" aria-label="दूसरा number">
+    </div>
+    <button class="check" onclick="checkAnswer()">Check Answer</button>
+    <div id="feedback" class="feedback"></div>
+    <button class="next" onclick="nextQuestion()">Skip → Next Question</button>
+  </div>
+
+  <div class="card">
+    <div class="stats">
+      <div class="stat"><b id="correct">0</b><span>Correct</span></div>
+      <div class="stat"><b id="wrong">0</b><span>Wrong</span></div>
+      <div class="stat"><b id="accuracy">0%</b><span>Accuracy</span></div>
+    </div>
+    <div class="small">कोई भी एक valid factor pair सही माना जाएगा।</div>
+  </div>
+</div>
+
+<script>
+const fromEl=document.getElementById('from'),toEl=document.getElementById('to');
+for(let i=1;i<=100;i++){fromEl.innerHTML+=`<option value="${i}">${i}</option>`;toEl.innerHTML+=`<option value="${i}">${i}</option>`}
+fromEl.value=1;toEl.value=10;
+let current=0,checked=false,correct=0,wrong=0,currentPairs=[],timerId=null,timeLeft=60,language='hi';
+const T={
+hi:{title:'🧮 Table Multiple Practice',sub:'दिए गए number के किसी भी valid × multiple को खोजो',from:'Table From',to:'Table To',timer:'Timer',hint:'इस number को दो numbers के गुणन के रूप में लिखो',check:'Check Answer',skip:'Skip → Next Question',correct:'Correct',wrong:'Wrong',accuracy:'Accuracy',note:'कोई भी एक valid factor pair सही माना जाएगा।',missing:'पहले दोनों numbers भरें।',right:(a,b,n)=>`✓ सही! ${a} × ${b} = ${n}`,wrongMsg:(f,t)=>`✗ गलत। Table range ${f}–${t} और multiplier ×1–×10 के अंदर answer दें।`,timeup:'⏰ Time up!'}
+,en:{title:'🧮 Table Multiple Practice',sub:'Find any valid × multiple for the given number',from:'Table From',to:'Table To',timer:'Timer',hint:'Write this number as a product of two numbers',check:'Check Answer',skip:'Skip → Next Question',correct:'Correct',wrong:'Wrong',accuracy:'Accuracy',note:'Any one valid factor pair is accepted.',missing:'Enter both numbers first.',right:(a,b,n)=>`✓ Correct! ${a} × ${b} = ${n}`,wrongMsg:(f,t)=>`✗ Wrong. Use a table from ${f}–${t} and multiplier ×1–×10.`,timeup:'⏰ Time up!'}};
+function getRange(){let f=+fromEl.value,t=+toEl.value;if(f>t){[f,t]=[t,f];fromEl.value=f;toEl.value=t}return[f,t]}
+function makeQuestion(){const[f,t]=getRange(),table=Math.floor(Math.random()*(t-f+1))+f,m=Math.floor(Math.random()*10)+1;current=table*m;currentPairs=[];for(let a=f;a<=t;a++){if(current%a===0){let b=current/a;if(b>=1&&b<=10)currentPairs.push([a,b])}}checked=false;document.getElementById('number').textContent=current;document.getElementById('feedback').textContent='';document.getElementById('feedback').className='feedback';document.getElementById('a').value='';document.getElementById('b').value='';document.getElementById('a').focus()}
+function nextQuestion(){if(timeLeft===0&&+document.getElementById('timerSelect').value!==0)return;makeQuestion()}
+function checkAnswer(){if(checked||(timeLeft===0&&+document.getElementById('timerSelect').value!==0))return;const a=+document.getElementById('a').value,b=+document.getElementById('b').value,fb=document.getElementById('feedback'),t=T[language];if(!a||!b){fb.textContent=t.missing;fb.className='feedback bad';return}const valid=currentPairs.some(([x,y])=>x===a&&y===b);if(valid){correct++;checked=true;fb.textContent=t.right(a,b,current);fb.className='feedback good';updateStats();setTimeout(makeQuestion,650)}else{wrong++;const[f,to]=getRange();fb.textContent=t.wrongMsg(f,to);fb.className='feedback bad';updateStats()}}
+function updateStats(){document.getElementById('correct').textContent=correct;document.getElementById('wrong').textContent=wrong;let total=correct+wrong;document.getElementById('accuracy').textContent=total?Math.round(correct/total*100)+'%':'0%'}
+function resetTimer(){clearInterval(timerId);let seconds=+document.getElementById('timerSelect').value;timeLeft=seconds;updateTimerDisplay();if(seconds>0){timerId=setInterval(()=>{timeLeft--;updateTimerDisplay();if(timeLeft<=0){clearInterval(timerId);checked=true;let fb=document.getElementById('feedback');fb.textContent=T[language].timeup;fb.className='feedback bad'}},1000)}}
+function updateTimerDisplay(){let el=document.getElementById('timerDisplay'),v=+document.getElementById('timerSelect').value;if(v===0){el.textContent='Timer Off';return}el.textContent='⏱ '+String(Math.floor(timeLeft/60)).padStart(2,'0')+':'+String(timeLeft%60).padStart(2,'0')}
+function applyRange(){correct=0;wrong=0;updateStats();resetTimer();makeQuestion()}
+function toggleTheme(){const d=!document.body.classList.contains('dark');applyTheme(d?'dark':'light')}
+function toggleLanguage(){const next=language==='hi'?'en':'hi';localStorage.setItem('tablePracticeLanguage',next);toggleLanguageTo(next)}
+function showWelcomeText(lang){
+  const hi=lang==='hi';
+  document.getElementById('welcomeTitle').textContent=hi?'Welcome to Sarkari Pen':'Welcome to Sarkari Pen';
+  document.getElementById('welcomeText').textContent=hi
+    ?'शुरू करने से पहले अपनी पसंद की language, theme और practice timer चुनें। ये settings आगे आपकी practice में default रहेंगी।'
+    :'Before you start, choose your preferred language, theme and practice timer. These settings will be saved as your defaults.';
+  document.getElementById('welcomeLangLabel').textContent=hi?'Language':'Language';
+  document.getElementById('welcomeThemeLabel').textContent=hi?'Theme':'Theme';
+  document.getElementById('welcomeTimerLabel').textContent=hi?'Practice Timer':'Practice Timer';
+  document.getElementById('welcomeOk').textContent=hi?'OK — Start Practice':'OK — Start Practice';
+  document.getElementById('welcomeNote').textContent=hi
+    ?'आप बाद में ऊपर के buttons से language और theme बदल सकते हैं।'
+    :'You can change language and theme later using the buttons above.';
+}
+function saveWelcomeSettings(){
+  const lang=document.getElementById('welcomeLang').value;
+  const theme=document.getElementById('welcomeTheme').value;
+  const timer=document.getElementById('welcomeTimer').value;
+
+  language=lang;
+  localStorage.setItem('tablePracticeLanguage',lang);
+  localStorage.setItem('tablePracticeTimer',timer);
+  applyTheme(theme);
+
+  document.getElementById('timerSelect').value=timer;
+  toggleLanguageTo(lang);
+  resetTimer();
+  updateStats();
+  makeQuestion();
+
+  localStorage.setItem('tablePracticeWelcomeSeen','1');
+  document.getElementById('welcomeOverlay').classList.add('hidden');
+}
+function toggleLanguageTo(lang){
+  language=lang;
+  const t=T[language];
+  document.getElementById('titleText').textContent=t.title;
+  document.querySelector('.sub').textContent=t.sub;
+  document.querySelector('label[for="from"]').textContent=t.from;
+  document.querySelector('label[for="to"]').textContent=t.to;
+  document.querySelector('label[for="timerSelect"]').textContent=t.timer;
+  document.getElementById('hintText').textContent=t.hint;
+  document.querySelector('.check').textContent=t.check;
+  document.querySelector('.next').textContent=t.skip;
+  const spans=document.querySelectorAll('.stat span');
+  spans[0].textContent=t.correct;spans[1].textContent=t.wrong;spans[2].textContent=t.accuracy;
+  document.getElementById('langBtn').textContent=language==='hi'?'EN':'HI';
+  updateTimerDisplay();
+}
+function openWelcomeIfNeeded(){
+  if(localStorage.getItem('tablePracticeWelcomeSeen')==='1') return;
+
+  const savedLang=localStorage.getItem('tablePracticeLanguage')||'hi';
+  const savedTheme=localStorage.getItem('tablePracticeDark')==='1'?'dark':'light';
+  const savedTimer=localStorage.getItem('tablePracticeTimer')||'60';
+
+  document.getElementById('welcomeLang').value=savedLang;
+  document.getElementById('welcomeTheme').value=savedTheme;
+  document.getElementById('welcomeTimer').value=savedTimer;
+  showWelcomeText(savedLang);
+  document.getElementById('welcomeLang').addEventListener('change',e=>showWelcomeText(e.target.value));
+  document.getElementById('welcomeOverlay').classList.remove('hidden');
+}
+
+const savedLanguage=localStorage.getItem('tablePracticeLanguage')||'hi';
+const savedTimer=localStorage.getItem('tablePracticeTimer')||'60';
+const savedDark=localStorage.getItem('tablePracticeDark')==='1';
+language=savedLanguage;
+document.getElementById('timerSelect').value=savedTimer;
+if(savedDark) applyTheme('dark'); else applyTheme('light');
+toggleLanguageTo(savedLanguage);
+updateStats();makeQuestion();resetTimer();
+openWelcomeIfNeeded();
+</script>
+</body>
+</html>
