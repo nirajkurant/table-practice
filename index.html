@@ -1,0 +1,864 @@
+<!doctype html><html lang="hi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#4f46e5"><title>Calculation Booster — Sarkari Pen</title>
+<style>
+:root{--bg:#f6f8fc;--card:#fff;--soft:#eef2f7;--text:#111827;--muted:#64748b;--line:#e2e8f0;--p:#4f46e5;--p2:#7c3aed;--good:#16a34a;--bad:#dc2626;--shadow:0 10px 28px rgba(15,23,42,.07)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}body.dark{--bg:#0b1020;--card:#111827;--soft:#1b2638;--text:#f8fafc;--muted:#9ca3af;--line:#334155;--shadow:0 12px 32px rgba(0,0,0,.25)}
+.app{max-width:650px;margin:auto;padding:10px 14px 32px}.top{height:38px;display:flex;justify-content:space-between;align-items:center}.brand{color:var(--p);font-weight:850;text-decoration:none}.dark .brand{color:#a5b4fc}.ctrl{display:flex;gap:6px}.ctrl button{width:34px;height:32px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--text);font-weight:800}.ctrl select{height:32px;min-width:82px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--text);font-size:11px;font-weight:800;padding:0 7px}
+.hero{text-align:center;padding:10px 0 18px}.logo{width:58px;height:58px;margin:auto;display:grid;place-items:center;border-radius:18px;font-size:28px;background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;box-shadow:0 9px 22px #4f46e533}h1{font-size:27px;margin:10px 0 4px}.sub{color:var(--muted);font-size:13px}.screen{display:none}.screen.active{display:block}.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px;margin-bottom:12px}.title{font-weight:850;margin-bottom:11px}.mods{display:grid;grid-template-columns:1fr 1fr;gap:9px}.mod{border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:17px;padding:14px;text-align:left;min-height:88px;font-weight:850;box-shadow:var(--shadow)}.mod:active{transform:scale(.99)}.mod span{display:block;font-size:24px;margin-bottom:6px}.mod small{display:block;color:var(--muted);font-weight:600;margin-top:4px}.wide{grid-column:1/-1}.section-title{font-size:19px;font-weight:950;margin-bottom:4px}.section-subtitle{font-size:11px;color:var(--muted);margin-bottom:12px;line-height:1.4}.practice-sections{margin-bottom:12px}.future-mods{margin-top:0}.future{cursor:default;opacity:.78}.future:active{transform:none}.future small{color:var(--muted)}.back{border:0;background:var(--soft);color:var(--p);font-weight:950;font-size:15px;padding:10px 15px;border-radius:12px;margin-bottom:10px;box-shadow:0 2px 8px rgba(15,23,42,.08);}.grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}label{font-size:11px;font-weight:800;color:var(--muted);display:block;margin:0 0 6px 3px}select,input{width:100%;height:47px;border:2px solid var(--line);border-radius:13px;background:var(--card);color:var(--text);padding:0 11px;outline:0;color-scheme:light}body.dark select,body.dark input{color-scheme:dark}select option{background:var(--card);color:var(--text)}body.dark select option{background:#111827;color:#f8fafc}select:focus,input:focus{border-color:#818cf8;box-shadow:0 0 0 3px #6366f11c}.btn{width:100%;height:47px;border:0;border-radius:13px;font-weight:850;margin-top:9px}.primary{background:linear-gradient(135deg,var(--p),var(--p2));color:#fff}.secondary{background:var(--soft);color:var(--text);border:1px solid var(--line)}.pill{display:inline-block;padding:6px 9px;background:#eef2ff;color:#4338ca;border-radius:99px;font-size:10px;font-weight:850}.dark .pill{background:#292451;color:#c4b5fd}.head{display:flex;justify-content:space-between;align-items:center}.timer{font-size:13px;color:var(--p);font-weight:900}.q{text-align:center;padding:16px 4px}.number{font-size:46px;font-weight:950;margin:8px 0 14px;line-height:1.15;word-break:break-word}.answer{display:grid;grid-template-columns:1fr 30px 1fr;gap:7px;align-items:center}.answer.single-answer{display:flex;justify-content:center;width:100%}.answer.single-answer input{width:min(100%,360px);margin:0 auto}.answer input{text-align:center;font-size:23px;font-weight:900;height:55px;border-width:3px}.op{font-size:23px;font-weight:900;color:var(--muted)}.expr{text-align:center;font-size:34px;font-weight:950;margin:15px 0}.feedback{display:none}.feedback-slot{display:flex;align-items:center;justify-content:center;min-height:0;height:0;overflow:hidden;text-align:center;font-size:13px;font-weight:850;margin:0 auto;pointer-events:none}.feedback-slot.good,.feedback-slot.bad{height:42px;min-height:42px;margin-top:7px;padding:5px 8px;font-size:19px;line-height:1.1;font-weight:950;white-space:nowrap}.feedback-slot.good{color:var(--good);animation:feedbackGood .38s ease-out}.feedback-slot.bad{color:var(--bad);animation:feedbackBad .38s ease-out}.good{color:var(--good)}.bad{color:var(--bad)}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:10px}.stat{text-align:center;background:var(--soft);border:1px solid var(--line);border-radius:13px;padding:9px}.stat b{display:block;font-size:20px}.stat span{font-size:10px;color:var(--muted);font-weight:750}.help{text-align:center;color:var(--muted);font-size:11px;line-height:1.45;margin-top:9px}.actionbar{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:10px;position:relative}.actionbar .btn{margin-top:0}.keyboard-open .actionbar .btn{height:47px}
+.keyboard-active #question{padding-bottom:calc(8px + var(--custom-kb-height,264px) + var(--actionbar-height,63px) + var(--stats-height,60px) + 24px)}
+.keyboard-active .actionbar .btn{height:47px}
+.answer input.answer-wrong{border-color:var(--bad)!important;border-width:var(--signal-border,4px)!important;box-shadow:0 0 0 3px #dc262655,0 0 0 7px #dc262626!important;animation:wrongBlink .34s ease-in-out var(--wrong-blink-count,5)}
+.answer input.answer-correct{border-color:var(--good)!important;border-width:var(--signal-border,4px)!important;box-shadow:0 0 0 3px #16a34a55,0 0 0 7px #16a34a20!important;animation:correctPop .34s ease-out 2}
+#question>input.answer-wrong,#question>input.answer-correct{border-width:var(--signal-border,4px)!important}
+#question input{transition:border-color .12s ease,box-shadow .12s ease,transform .12s ease}
+@keyframes wrongBlink{0%,100%{opacity:1;box-shadow:0 0 0 3px #dc262655,0 0 0 7px #dc262626}50%{opacity:.48;box-shadow:0 0 0 6px #dc262699,0 0 0 11px #dc262633}}
+@keyframes correctPop{0%{transform:scale(1)}45%{transform:scale(1.045)}100%{transform:scale(1)}}
+.keyboard-active #feedback{display:none!important}.results-preview #question input,.results-preview #question .answer,.results-preview #question .actionbar,.results-preview #question .feedback-slot,.results-preview #feedback{display:none!important}
+@keyframes feedbackGood{0%{transform:scale(.82);opacity:.2}60%{transform:scale(1.12);opacity:1}100%{transform:scale(1)}}
+@keyframes feedbackBad{0%{transform:translateX(0);opacity:.2}25%{transform:translateX(-5px);opacity:1}50%{transform:translateX(5px)}75%{transform:translateX(-3px)}100%{transform:translateX(0)}}
+/* Custom practice keyboard */
+.practice-kb{position:fixed;left:0;right:0;bottom:0;z-index:1100;display:none;padding:8px 10px calc(8px + env(safe-area-inset-bottom));background:var(--card);border-top:1px solid var(--line);box-shadow:0 -8px 28px rgba(15,23,42,.16);touch-action:manipulation}
+.practice-kb.show{display:block}
+.kb-inner{max-width:650px;margin:0 auto}
+.kb-row{display:grid;gap:7px;margin-top:7px}
+.kb-row:first-child{margin-top:0}
+.kb-calc .kb-row{grid-template-columns:repeat(3,1fr)}
+.kb-dial .kb-row{grid-template-columns:repeat(3,1fr)}
+.kb-key{height:56px;border:1px solid var(--line);border-radius:12px;background:var(--soft);color:var(--text);font-size:21px;font-weight:900;box-shadow:0 1px 2px rgba(15,23,42,.08);-webkit-tap-highlight-color:transparent}
+.kb-key:active{transform:scale(.97);background:var(--line)}
+.kb-wide{grid-column:1/-1}
+.kb-action{font-size:18px}
+.kb-submit{background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;border-color:transparent;font-size:27px;box-shadow:0 6px 16px rgba(79,70,229,.24)}
+.kb-submit:active{background:linear-gradient(135deg,var(--p2),var(--p));}
+
+
+
+
+.keyboard-active .answer input{cursor:text}.keyboard-active{overflow-y:auto}.keyboard-active .app{min-height:100vh}.practice-kb.show{pointer-events:auto}
+.dark .practice-kb{box-shadow:0 -8px 28px rgba(0,0,0,.35)}
+@media(max-width:380px){.kb-key{height:50px;font-size:19px}}
+.overlay{position:fixed;inset:0;background:#0f172a99;display:none;align-items:center;justify-content:center;padding:18px;z-index:20}.overlay.show{display:flex}.modal{width:min(100%,420px);background:var(--card);color:var(--text);border:1px solid var(--line);border-radius:23px;padding:21px;text-align:center;box-shadow:0 25px 65px #0004}.mi{width:52px;height:52px;margin:auto;border-radius:16px;display:grid;place-items:center;background:linear-gradient(135deg,var(--p),var(--p2));font-size:26px;color:#fff}.modal h2{font-size:22px;margin:8px 0 5px}.modal p{font-size:12px;color:var(--muted);line-height:1.5}.result{background:var(--soft);padding:11px;border-radius:13px;font-size:12px;font-weight:800;margin:12px 0}.modal .field{text-align:left;margin-top:10px}.modal .btn{margin-top:12px}.gate-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}.gate-back{background:var(--soft);color:var(--text);border:1px solid var(--line)}
+
+.timer{font-size:16px;color:var(--p);font-weight:1000;letter-spacing:.3px;background:#eef2ff;border:1px solid #c7d2fe;border-radius:10px;padding:7px 10px;min-width:78px;text-align:center;box-shadow:0 3px 10px rgba(79,70,229,.12)}
+.dark .timer{background:#292451;border-color:#4c4a7a;color:#c4b5fd}
+.attempts-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}.attempts-title{font-size:18px;font-weight:950;letter-spacing:.1px}.attempts-badge{font-size:11px;font-weight:900;color:var(--p);background:#eef2ff;border:1px solid #c7d2fe;border-radius:999px;padding:5px 8px}.attempt-row{display:flex;gap:10px;align-items:flex-start;background:linear-gradient(180deg,var(--card),var(--soft));border:1px solid var(--line);border-left:4px solid var(--p);border-radius:15px;padding:12px;margin-top:9px;text-align:left;box-shadow:0 4px 14px rgba(15,23,42,.06)}
+.profile-card{display:flex;align-items:center;justify-content:space-between;gap:12px;background:linear-gradient(135deg,var(--card),var(--soft));border:1px solid var(--line);border-radius:17px;padding:12px;margin-bottom:12px}.profile-left{display:flex;align-items:center;gap:10px}.profile-avatar{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;font-size:21px}.profile-name{font-weight:900;font-size:14px}.profile-sub{font-size:10px;color:var(--muted);margin-top:2px}.settings-modal .field{margin-top:10px}.settings-modal .grid{margin-top:2px}.settings-modal .small-note{font-size:10px;color:var(--muted);line-height:1.4;margin-top:8px;text-align:left}.settings-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}.settings-modal{max-height:88vh;overflow:auto}.attempt-num{font-size:15px;font-weight:950;min-width:20px;color:var(--p)}.attempt-main{font-size:13px;line-height:1.5;font-weight:850}.attempt-main b{font-size:13px;font-weight:950}.attempt-main small{display:block;color:var(--muted);font-weight:800;margin-top:3px}.ok,.badx{font-size:13px}
+@media(max-width:380px){.timer{font-size:14px;padding:6px 8px;min-width:72px}.head{gap:6px}.pill{max-width:55%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
+
+/* v18: mobile-safe normal document flow. Only the numeric keyboard is fixed. */
+.keyboard-active #question{padding-bottom:0!important;}
+.keyboard-active .actionbar{position:relative!important;left:auto!important;bottom:auto!important;transform:none!important;width:100%!important;z-index:5!important;margin:10px 0 0!important;padding:0!important;border:0!important;border-radius:0!important;box-shadow:none!important;scroll-margin-bottom:12px!important;}
+.keyboard-active .stats{position:relative!important;left:auto!important;bottom:auto!important;transform:none!important;width:100%!important;z-index:5!important;margin:10px 0 0!important;padding:0!important;border:0!important;border-radius:0!important;box-shadow:none!important;}
+.keyboard-active .feedback-slot{position:relative!important;left:auto!important;bottom:auto!important;transform:none!important;width:100%!important;}
+.keyboard-active .app{padding-bottom:calc(var(--custom-kb-height,264px) + 16px)!important;min-height:100vh;}
+.results-preview #question{padding-bottom:0!important;min-height:0!important;}
+.results-preview #attemptsCard{margin-top:0!important;}
+@media(max-width:380px){.keyboard-active .app{padding-bottom:calc(var(--custom-kb-height,264px) + 12px)!important;}.keyboard-active .actionbar{position:relative!important;}}
+ .reset-defaults-btn{margin-top:8px;border-color:#fca5a5!important;color:#b91c1c!important} .settings-modal{max-height:88vh;overflow:auto}
+.kb-enter-full{width:100%!important;min-height:52px!important;margin-top:6px!important;font-weight:900!important;} .kb-submit{font-weight:900!important;}
+
+/* Time-up review: wrong questions and answers */
+.timeup-wrong-list{margin-top:14px;text-align:left;max-height:42vh;overflow:auto;padding-right:4px}
+.timeup-wrong-title{font-weight:800;font-size:16px;margin:10px 0 7px}
+.timeup-wrong-item{padding:9px;margin:7px 0;border:1px solid var(--line);border-radius:12px;background:var(--soft)}
+.timeup-question{font-weight:750;font-size:14px;line-height:1.35}
+.timeup-skipped-list .timeup-wrong-title{color:#d97706}.timeup-answer{margin-top:5px;padding:6px 9px;border-radius:9px;background:#16a34a22;border:2px solid #22c55e;color:#22c55e;font-weight:900;font-size:15px;text-align:center;letter-spacing:.1px}
+.attempt-row{cursor:pointer}.attempt-row:active{transform:scale(.99)}.attempt-details{display:none;margin-top:8px;padding:9px;border-top:1px dashed var(--line);font-size:12px;line-height:1.45}.attempt-row.open .attempt-details{display:block}.attempt-detail{padding:7px 0;border-bottom:1px solid var(--line)}.attempt-detail:last-child{border-bottom:0}.attempt-answer{font-weight:900;color:var(--good)}.attempt-user-wrong{color:var(--bad);font-weight:900}.attempt-user-skipped{color:#d97706;font-weight:900}.attempt-hint{font-size:10px;color:var(--muted);margin-top:4px}
+
+/* v35 Progress & History */
+.progress-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:10px}
+.progress-stat{background:var(--soft);border:1px solid var(--line);border-radius:14px;padding:12px;text-align:center}
+.progress-stat b{display:block;font-size:20px;font-weight:950}.progress-stat span{display:block;font-size:10px;color:var(--muted);font-weight:800;margin-top:3px}
+.progress-wide{grid-column:1/-1}.recent-list{display:grid;gap:8px}.recent-row{border:1px solid var(--line);background:var(--soft);border-radius:14px;padding:11px;cursor:pointer}.recent-row b{display:block;font-size:13px}.recent-row small{display:block;color:var(--muted);font-size:10px;margin-top:3px}.recent-empty{color:var(--muted);font-size:12px;text-align:center;padding:12px}.streak-live{margin-top:9px;text-align:center;font-size:13px;font-weight:900;color:#d97706;min-height:20px}.dark .streak-live{color:#fbbf24}.attempt-best{display:inline-block;margin-left:5px;padding:2px 6px;border-radius:99px;background:#f59e0b22;color:#b45309;font-size:10px;font-weight:950}.dark .attempt-best{color:#fbbf24}
+</style></head><body>
+<div class="app"><div class="top"><a class="brand" href="https://t.me/@sarkaripen" target="_blank" rel="noopener">Sarkari Pen</a><div class="ctrl"><button id="theme" onclick="toggleTheme()">🌙</button><select id="langSelect" onchange="changeLang(this.value)" aria-label="Language"><option value="hi">हिंदी</option><option value="en">English</option><option value="gu">ગુજરાતી</option><option value="mr">मराठी</option><option value="bn">বাংলা</option><option value="ta">தமிழ்</option><option value="te">తెలుగు</option><option value="ur">اردو</option></select></div></div>
+<section id="home" class="screen active"><div class="hero"><div class="logo">🧮</div><h1 id="appTitle">Calculation Booster</h1><div class="sub" id="sub"></div></div><div class="profile-card"><div class="profile-left"><div class="profile-avatar">👤</div><div><div class="profile-name" id="profileName">My Profile</div><div class="profile-sub" id="profileSub">Default practice settings</div></div></div><button class="btn secondary" style="width:auto;margin:0;padding:0 14px;height:40px" type="button" onclick="openProfile()">⚙️ Settings</button></div><div class="card" id="progressCard"><div class="section-title">📊 Your Progress</div><div class="section-subtitle">Your saved practice performance on this device.</div><div id="progressContent"></div></div><div class="card" id="recentCard"><div class="section-title">🕒 Recent Practice</div><div id="recentContent"></div></div><div class="card practice-sections"><div class="section-title" id="dailyCalculationTitle">Daily Calculation</div><div class="section-subtitle" id="dailyCalculationSub">Build speed and accuracy with daily calculation drills.</div><div class="mods">
+<button class="mod" onclick="openGate('tables')"><span>✖️</span><b id="m_tables"></b><small id="d_tables"></small></button>
+<button class="mod" onclick="openGate('addition')"><span>➕</span><b id="m_addition"></b><small id="d_addition"></small></button>
+<button class="mod" onclick="openGate('subtraction')"><span>➖</span><b id="m_subtraction"></b><small id="d_subtraction"></small></button>
+<button class="mod" onclick="openGate('multiplication')"><span>✖️</span><b id="m_multiplication"></b><small id="d_multiplication"></small></button>
+<button class="mod" onclick="openGate('division')"><span>➗</span><b id="m_division"></b><small id="d_division"></small></button>
+<button class="mod" onclick="openGate('square')"><span>²</span><b id="m_square"></b><small id="d_square"></small></button>
+<button class="mod" onclick="openGate('root')"><span>√</span><b id="m_root"></b><small id="d_root"></small></button>
+<button class="mod wide" onclick="openGate('mixed')"><span>🔀</span><b id="m_mixed"></b><small id="d_mixed"></small></button>
+</div></div>
+<div class="card practice-sections"><div class="section-title" id="dailyPracticeTitle">Daily Practice</div><div class="section-subtitle" id="dailyPracticeSub">Practice common exam topics every day.</div><div class="mods">
+<button class="mod" onclick="openGate('percentage')"><span>%</span><b id="m_percentage">Percentage</b><small id="d_percentage">Percent calculations</small></button>
+<button class="mod" onclick="openGate('fraction')"><span>½</span><b id="m_fraction">Fraction</b><small id="d_fraction">Fraction calculations</small></button>
+<button class="mod" onclick="openGate('average')"><span>μ</span><b id="m_average">Average</b><small id="d_average">Average &amp; mean</small></button>
+<button class="mod" onclick="openGate('ratio')"><span>∶</span><b id="m_ratio">Ratio</b><small id="d_ratio">Ratio &amp; proportion</small></button>
+<button class="mod" onclick="openGate('lcmhcf')"><span>LCM</span><b id="m_lcmhcf">LCM/HCF</b><small id="d_lcmhcf">Number properties</small></button>
+<button class="mod" onclick="openGate('simplification')"><span>≈</span><b id="m_simplification">Simplification</b><small id="d_simplification">BODMAS practice</small></button>
+<button class="mod wide" onclick="openGate('approximation')"><span>≈</span><b id="m_approximation">Approximation</b><small id="d_approximation">Quick estimation</small></button>
+</div></div></section>
+<section id="practice" class="screen"><button class="back" onclick="goHome()">← <span id="back">Home पर जाएँ</span></button><div class="card" id="settings"></div><div class="card q"><div class="head"><span class="pill" id="pill"></span><span class="timer" id="timer"></span></div><div id="question"></div><div id="feedback" class="feedback"></div><div class="stats"><div class="stat"><b id="c">0</b><span id="sc">सही</span></div><div class="stat"><b id="w">0</b><span id="sw">गलत</span></div><div class="stat"><b id="acc">0%</b><span id="sa">सटीकता</span></div></div><div class="streak-live" id="liveStreak">🔥 Streak: 0</div></div><div class="card" id="attemptsCard"></div></section></div>
+
+<div class="practice-kb" id="practiceKeyboard" aria-hidden="true"><div class="kb-inner" id="kbInner"></div></div>
+<div class="overlay" id="profile"><div class="modal settings-modal"><div class="mi">👤</div><h2>Profile &amp; Settings</h2><p>Control shared default practice behaviour from one place.</p><div class="field"><label>Profile Name</label><input id="profileNameInput" type="text" maxlength="30" placeholder="My Profile"></div><div class="field"><label>Default Keyboard</label><select id="defaultKeyboardSetting"><option value="calculator">Calculator</option><option value="dial">Dial Pad</option></select></div><div class="field"><label>Default Timer</label><select id="defaultTimerSetting"><option value="60">1 min</option><option value="120">2 min</option><option value="180">3 min</option><option value="300">5 min</option><option value="600">10 min</option><option value="1200">20 min</option><option value="custom">Custom</option></select></div><div class="grid"><div class="field"><label>Feedback (ms)</label><input id="feedbackDurationSetting" type="number" min="100" max="2000" step="50"></div><div class="field"><label>Wrong Clear (ms)</label><input id="wrongClearSetting" type="number" min="500" max="5000" step="100"></div></div><div class="grid"><div class="field"><label>Border (px)</label><input id="borderSetting" type="number" min="2" max="8" step="1"></div><div class="field"><label>Blink Count</label><input id="blinkSetting" type="number" min="1" max="10" step="1"></div></div><div class="grid"><div class="field"><label>Wrong Vibration (ms)</label><input id="vibrateSetting" type="number" min="0" max="1000" step="20"></div></div><div class="small-note">All calculation features read these shared defaults. No feature has its own separate feedback styling or default-control system.</div><div class="settings-actions"><button class="btn secondary" type="button" onclick="closeProfile()">Cancel</button><button class="btn primary" type="button" onclick="saveProfile()">Save Settings</button></div><button class="btn secondary reset-defaults-btn" type="button" onclick="resetProfileDefaults()">↺ Reset Default Settings</button></div></div><div class="overlay" id="gate"><div class="modal"><div class="mi" id="gateIcon">🧮</div><h2 id="gateTitle"></h2><p id="gateText"></p><div id="gateFields"></div><div class="gate-actions"><button class="btn gate-back" id="gateBack" type="button" onclick="closeGate()"></button><button class="btn primary" id="gateStart" type="button" onclick="startFromGate()"></button></div></div></div>
+<div class="overlay" id="timeup"><div class="modal"><div class="mi">⏰</div><h2 id="timeTitle"></h2><p id="timeText"></p><div class="result" id="timeResult"></div><div id="timeActions"><button class="btn primary" onclick="showTimeActions()" id="timeOk"></button></div></div></div>
+<script>
+(function () {
+  'use strict';
+  function $(id) { return document.getElementById(id); }
+  var memStore = {};
+  function storeGet(k) { try { return window.localStorage.getItem(k); } catch(e) { return Object.prototype.hasOwnProperty.call(memStore,k) ? memStore[k] : null; } }
+  function storeSet(k,v) { try { window.localStorage.setItem(k,v); } catch(e) { memStore[k]=String(v); } }
+
+  // Shared practice UI defaults: keep all common keyboard/action behavior here.
+  // Future default-setting controls should change this object, not individual features.
+  var UI_CONFIG = {
+    defaultKeyboard: 'calculator',
+    keepFeatureActionsAboveKeyboard: false,
+    submitKeyLabel: 'Enter',
+    feedbackDurationMs: 280,
+    correctSignal: true,
+    wrongSignal: true,
+    wrongVibrateMs: 180,
+    keepActionsAboveKeyboard: false,
+    feedbackHeightPx: 42,
+    feedbackGapPx: 8,
+    signalBorderPx: 4,
+    wrongBlinkCount: 5,
+    wrongClearDelayMs: 2000,
+    profileName: 'My Profile',
+    defaultTimer: 60
+  };
+
+  var S = {
+    m: 'tables',
+    lang: storeGet('cbLang') || 'en',
+    dark: storeGet('cbDark') === '1',
+    timer: 60,
+    left: 0, id: null, c: 0, w: 0, target: 0, pairs: [], locked: false, resultsFromTimeUp: false,
+    from: 1, to: 20, diff: 'easy', gateHistory: false,
+    keyboard: UI_CONFIG.defaultKeyboard, activeInput: null, wrongClearTimer: null, wrongQuestions: [], skippedQuestions: [], answerHistory: [], currentQuestionText: '', currentAnswerText: '', currentQuestionKey: '', streak: 0, bestStreakSession: 0
+  };
+  var T = {
+    hi:{sub:'गणना की speed और accuracy बढ़ाएँ',choose:'Practice चुनें',back:'Home पर जाएँ',check:'उत्तर जाँचें',skip:'छोड़ें → अगला',from:'Table From',to:'Table To',practice:'अभ्यास',hint:'दिए number को दो numbers के गुणन के रूप में लिखें',missing:'पहले answer भरें।',time:'समय',up:'समय समाप्त',over:'आपका practice time पूरा हो गया है।',ok:'ठीक है',again:'पिछले परिणाम देखें',restart:'फिर से शुरू करें',difficulty:'कठिनाई',easy:'आसान',medium:'मध्यम',hard:'कठिन',gateStart:'अभ्यास शुरू करें',gateBack:'वापस जाएँ',mult:'×1 से ×10 तक multiplier',attempts:'पिछले प्रयास',noAttempts:'अभी कोई पिछला प्रयास नहीं है।',correct:'सही',wrong:'गलत',accuracy:'सटीकता',rightMsg:'सही!',wrongMsg:'गलत',min:'मिनट',sec:'सेकंड',one:'1 मिनट',two:'2 मिनट',five:'5 मिनट',ten:'10 मिनट',off:'बंद',keyboard:'कीबोर्ड',calculator:'कैलकुलेटर',dial:'डायल पैड',backspace:'⌫',clear:'C',moreTitle:'और मॉड्यूल',moreText:'Percentage • Fraction • Average • Ratio • LCM/HCF • Simplification • Approximation आगे जोड़े जा सकते हैं।'},
+    en:{sub:'Build calculation speed & accuracy',choose:'Choose Practice',back:'Back to Home',check:'Check Answer',skip:'Skip → Next',from:'Table From',to:'Table To',practice:'PRACTICE',hint:'Write the given number as a product of two numbers',missing:'Enter an answer first.',time:'Timer',up:'Time Up',over:'Your practice time is over.',ok:'OK',again:'Previous Results',restart:'Restart',difficulty:'Difficulty',easy:'Easy',medium:'Medium',hard:'Hard',gateStart:'Start Practice',gateBack:'Back',mult:'Multiplier is limited to ×1–×10',attempts:'Previous Attempts',noAttempts:'No previous attempts yet.',correct:'Correct',wrong:'Wrong',accuracy:'Accuracy',min:'min',sec:'sec',one:'1 min',two:'2 min',five:'5 min',ten:'10 min',off:'Off',keyboard:'Keyboard',calculator:'Calculator',dial:'Dial Pad',backspace:'⌫',clear:'C',moreTitle:'More Modules',moreText:'Percentage • Fraction • Average • Ratio • LCM/HCF • Simplification • Approximation can be added later.'},
+    gu:{sub:'ગણતરીની ઝડપ અને ચોકસાઈ વધારો',choose:'પ્રેક્ટિસ પસંદ કરો',back:'હોમ પર પાછા જાઓ',check:'જવાબ તપાસો',skip:'છોડો → આગળનો',from:'ટેબલ અહીંથી',to:'ટેબલ અહીં સુધી',practice:'પ્રેક્ટિસ',hint:'આ સંખ્યાને બે સંખ્યાના ગુણાકાર તરીકે લખો',missing:'પહેલા જવાબ દાખલ કરો.',time:'સમય',up:'સમય પૂર્ણ',over:'તમારો પ્રેક્ટિસ સમય પૂરો થયો છે.',ok:'બરાબર',again:'પાછલા પરિણામો જુઓ',restart:'ફરી શરૂ કરો',difficulty:'કઠિનાઈ',easy:'સરળ',medium:'મધ્યમ',hard:'કઠિન',gateStart:'પ્રેક્ટિસ શરૂ કરો',gateBack:'પાછા જાઓ',mult:'ગુણક ×1 થી ×10 સુધી મર્યાદિત છે',attempts:'પાછલા પ્રયાસો',noAttempts:'હજુ કોઈ પાછલો પ્રયાસ નથી.',correct:'સાચું',wrong:'ખોટું',accuracy:'ચોકસાઈ',min:'મિનિટ',sec:'સેકન્ડ',one:'1 મિનિટ',two:'2 મિનિટ',five:'5 મિનિટ',ten:'10 મિનિટ',off:'બંધ',keyboard:'કીબોર્ડ',calculator:'કેલ્ક્યુલેટર',dial:'ડાયલ પેડ',backspace:'⌫',clear:'C',moreTitle:'વધુ મોડ્યુલ',moreText:'Percentage • Fraction • Average • Ratio • LCM/HCF • Simplification • Approximation આગળ ઉમેરી શકાય છે.'},
+    mr:{sub:'गणनेचा वेग आणि अचूकता वाढवा',choose:'सराव निवडा',back:'होमवर जा',check:'उत्तर तपासा',skip:'वगळा → पुढील',from:'टेबल पासून',to:'टेबल पर्यंत',practice:'सराव',hint:'ही संख्या दोन संख्यांच्या गुणाकाराच्या रूपात लिहा',missing:'प्रथम उत्तर भरा.',time:'वेळ',up:'वेळ संपली',over:'तुमचा सरावाचा वेळ संपला आहे.',ok:'ठीक आहे',again:'मागील निकाल पहा',restart:'पुन्हा सुरू करा',difficulty:'कठीणता',easy:'सोपे',medium:'मध्यम',hard:'कठीण',gateStart:'सराव सुरू करा',gateBack:'मागे जा',mult:'गुणक ×1 ते ×10 पर्यंत मर्यादित आहे',attempts:'मागील प्रयत्न',noAttempts:'अजून कोणताही मागील प्रयत्न नाही.',correct:'बरोबर',wrong:'चूक',accuracy:'अचूकता',min:'मिनिट',sec:'सेकंद',one:'1 मिनिट',two:'2 मिनिटे',five:'5 मिनिटे',ten:'10 मिनिटे',off:'बंद',keyboard:'कीबोर्ड',calculator:'कॅल्क्युलेटर',dial:'डायल पॅड',backspace:'⌫',clear:'C',moreTitle:'अधिक मॉड्यूल',moreText:'Percentage • Fraction • Average • Ratio • LCM/HCF • Simplification • Approximation पुढे जोडता येतील.'},
+    bn:{sub:'গণনার গতি ও নির্ভুলতা বাড়ান',choose:'প্র্যাকটিস বেছে নিন',back:'হোমে ফিরে যান',check:'উত্তর যাচাই করুন',skip:'এড়িয়ে যান → পরেরটি',from:'টেবিল শুরু',to:'টেবিল শেষ',practice:'প্র্যাকটিস',hint:'এই সংখ্যাটিকে দুটি সংখ্যার গুণফল হিসেবে লিখুন',missing:'প্রথমে উত্তর লিখুন।',time:'সময়',up:'সময় শেষ',over:'আপনার প্র্যাকটিসের সময় শেষ হয়েছে।',ok:'ঠিক আছে',again:'আগের ফলাফল দেখুন',restart:'আবার শুরু করুন',difficulty:'কঠিনতা',easy:'সহজ',medium:'মাঝারি',hard:'কঠিন',gateStart:'প্র্যাকটিস শুরু করুন',gateBack:'ফিরে যান',mult:'গুণক ×1 থেকে ×10 পর্যন্ত সীমিত',attempts:'আগের প্রচেষ্টা',noAttempts:'এখনও কোনো আগের প্রচেষ্টা নেই।',correct:'সঠিক',wrong:'ভুল',accuracy:'নির্ভুলতা',min:'মিনিট',sec:'সেকেন্ড',one:'1 মিনিট',two:'2 মিনিট',five:'5 মিনিট',ten:'10 মিনিট',off:'বন্ধ',keyboard:'কীবোর্ড',calculator:'ক্যালকুলেটর',dial:'ডায়াল প্যাড',backspace:'⌫',clear:'C',moreTitle:'আরও মডিউল',moreText:'Percentage • Fraction • Average • Ratio • LCM/HCF • Simplification • Approximation পরে যোগ করা যাবে।'},
+    ta:{sub:'கணக்கீட்டு வேகத்தையும் துல்லியத்தையும் அதிகரிக்கவும்',choose:'பயிற்சியைத் தேர்ந்தெடுக்கவும்',back:'முகப்புக்குத் திரும்பு',check:'விடையைச் சரிபார்',skip:'தவிர் → அடுத்து',from:'அட்டவணை தொடக்கம்',to:'அட்டவணை முடிவு',practice:'பயிற்சி',hint:'இந்த எண்ணை இரண்டு எண்களின் பெருக்கலாக எழுதவும்',missing:'முதலில் விடையை உள்ளிடவும்.',time:'நேரம்',up:'நேரம் முடிந்தது',over:'உங்கள் பயிற்சி நேரம் முடிந்துவிட்டது.',ok:'சரி',again:'முந்தைய முடிவுகளைப் பார்க்கவும்',restart:'மீண்டும் தொடங்கு',difficulty:'சிரமம்',easy:'எளிது',medium:'நடுத்தரம்',hard:'கடினம்',gateStart:'பயிற்சியைத் தொடங்கு',gateBack:'பின்செல்',mult:'பெருக்கி ×1 முதல் ×10 வரை மட்டுமே',attempts:'முந்தைய முயற்சிகள்',noAttempts:'முந்தைய முயற்சிகள் எதுவும் இல்லை.',correct:'சரி',wrong:'தவறு',accuracy:'துல்லியம்',min:'நிமி',sec:'வினாடி',one:'1 நிமிடம்',two:'2 நிமிடங்கள்',five:'5 நிமிடங்கள்',ten:'10 நிமிடங்கள்',off:'நிறுத்தம்',keyboard:'விசைப்பலகை',calculator:'கால்குலேட்டர்',dial:'டயல் பேட்',backspace:'⌫',clear:'C',moreTitle:'மேலும் தொகுதிகள்',moreText:'Percentage • Fraction • Average • Ratio • LCM/HCF • Simplification • Approximation பின்னர் சேர்க்கலாம்.'},
+    te:{sub:'గణన వేగం మరియు ఖచ్చితత్వాన్ని పెంచండి',choose:'ప్రాక్టీస్ ఎంచుకోండి',back:'హోమ్‌కు తిరిగి వెళ్లండి',check:'సమాధానం తనిఖీ చేయండి',skip:'దాటవేయి → తదుపరి',from:'టేబుల్ ప్రారంభం',to:'టేబుల్ ముగింపు',practice:'ప్రాక్టీస్',hint:'ఈ సంఖ్యను రెండు సంఖ్యల గుణకంగా రాయండి',missing:'ముందుగా సమాధానం నమోదు చేయండి.',time:'సమయం',up:'సమయం ముగిసింది',over:'మీ ప్రాక్టీస్ సమయం ముగిసింది.',ok:'సరే',again:'మునుపటి ఫలితాలను చూడండి',restart:'మళ్లీ ప్రారంభించండి',difficulty:'కఠినత',easy:'సులభం',medium:'మధ్యస్థం',hard:'కఠినం',gateStart:'ప్రాక్టీస్ ప్రారంభించండి',gateBack:'వెనక్కి వెళ్లండి',mult:'గుణకం ×1 నుండి ×10 వరకు మాత్రమే',attempts:'మునుపటి ప్రయత్నాలు',noAttempts:'ఇంకా మునుపటి ప్రయత్నాలు లేవు.',correct:'సరైనవి',wrong:'తప్పులు',accuracy:'ఖచ్చితత్వం',min:'ని.',sec:'సె.',one:'1 నిమిషం',two:'2 నిమిషాలు',five:'5 నిమిషాలు',ten:'10 నిమిషాలు',off:'ఆఫ్',keyboard:'కీబోర్డ్',calculator:'క్యాలిక్యులేటర్',dial:'డయల్ ప్యాడ్',backspace:'⌫',clear:'C',moreTitle:'మరిన్ని మాడ్యూల్స్',moreText:'Percentage • Fraction • Average • Ratio • LCM/HCF • Simplification • Approximation తరువాత జోడించవచ్చు.'},
+    ur:{sub:'حساب کی رفتار اور درستگی بڑھائیں',choose:'پریکٹس منتخب کریں',back:'ہوم پر واپس جائیں',check:'جواب چیک کریں',skip:'چھوڑیں → اگلا',from:'پہاڑے شروع',to:'پہاڑے آخر',practice:'پریکٹس',hint:'اس عدد کو دو اعداد کے حاصلِ ضرب کی صورت میں لکھیں',missing:'پہلے جواب درج کریں۔',time:'وقت',up:'وقت ختم',over:'آپ کا پریکٹس وقت ختم ہو گیا ہے۔',ok:'ٹھیک ہے',again:'پچھلے نتائج دیکھیں',restart:'دوبارہ شروع کریں',difficulty:'مشکل',easy:'آسان',medium:'درمیانہ',hard:'مشکل',gateStart:'پریکٹس شروع کریں',gateBack:'واپس جائیں',mult:'ضرب ×1 سے ×10 تک محدود ہے',attempts:'پچھلی کوششیں',noAttempts:'ابھی کوئی پچھلی کوشش موجود نہیں۔',correct:'درست',wrong:'غلط',accuracy:'درستگی',min:'منٹ',sec:'سیکنڈ',one:'1 منٹ',two:'2 منٹ',five:'5 منٹ',ten:'10 منٹ',off:'بند',keyboard:'کی بورڈ',calculator:'کیلکولیٹر',dial:'ڈائل پیڈ',backspace:'⌫',clear:'C',moreTitle:'مزید ماڈیولز',moreText:'Percentage • Fraction • Average • Ratio • LCM/HCF • Simplification • Approximation بعد میں شامل کیے جا سکتے ہیں.'}
+  };
+  var langNames={hi:'सही!',en:'Correct!',gu:'સાચું!',mr:'बरोबर!',bn:'সঠিক!',ta:'சரி!',te:'సరైనది!',ur:'درست!'};
+  var langWrong={hi:'गलत',en:'Wrong',gu:'ખોટું',mr:'चूक',bn:'ভুল',ta:'தவறு',te:'తప్పు',ur:'غلط'};
+  for(var lk in T){if(Object.prototype.hasOwnProperty.call(T,lk)){T[lk].rightMsg=langNames[lk];T[lk].wrongMsg=langWrong[lk];}}
+
+  var M = {
+    tables:['✖️',{hi:'Tables',en:'Tables',gu:'ટેબલ',mr:'पाढे',bn:'নামতা',ta:'பெருக்கல் அட்டவணை',te:'టేబుల్స్',ur:'پہاڑے'},{hi:'Factor & table practice',en:'Factor & table practice',gu:'ગુણાકાર અને ટેબલ પ્રેક્ટિસ',mr:'गुणाकार आणि पाढ्यांचा सराव',bn:'গুণনীয়ক ও নামতার প্র্যাকটিস',ta:'காரணிகள் மற்றும் அட்டவணை பயிற்சி',te:'గుణకాలు మరియు టేబుల్ ప్రాక్టీస్',ur:'عوامل اور پہاڑوں کی پریکٹس'}],
+    addition:['➕',{hi:'जोड़',en:'Addition',gu:'સરવાળો',mr:'बेरीज',bn:'যোগ',ta:'கூட்டல்',te:'కూడిక',ur:'جمع'},{hi:'तेज़ जोड़',en:'Fast addition',gu:'ઝડપી સરવાળો',mr:'जलद बेरीज',bn:'দ্রুত যোগ',ta:'வேகமான கூட்டல்',te:'వేగవంతమైన కూడిక',ur:'تیز جمع'}],
+    subtraction:['➖',{hi:'घटाव',en:'Subtraction',gu:'બાદબાકી',mr:'वजाबाकी',bn:'বিয়োগ',ta:'கழித்தல்',te:'తీసివేత',ur:'تفریق'},{hi:'तेज़ घटाव',en:'Quick subtraction',gu:'ઝડપી બાદબાકી',mr:'जलद वजाबाकी',bn:'দ্রুত বিয়োগ',ta:'விரைவான கழித்தல்',te:'వేగవంతమైన తీసివేత',ur:'تیز تفریق'}],
+    multiplication:['✖️',{hi:'गुणा',en:'Multiplication',gu:'ગુણાકાર',mr:'गुणाकार',bn:'গুণ',ta:'பெருக்கல்',te:'గుణకారం',ur:'ضرب'},{hi:'गुणा करने की गति बढ़ाएँ',en:'Multiply faster',gu:'ઝડપી ગુણાકાર',mr:'गुणाकाराचा वेग वाढवा',bn:'দ্রুত গুণ করুন',ta:'வேகமாக பெருக்கவும்',te:'వేగంగా గుణించండి',ur:'تیز ضرب'}],
+    division:['➗',{hi:'भाग',en:'Division',gu:'ભાગાકાર',mr:'भागाकार',bn:'ভাগ',ta:'வகுத்தல்',te:'భాగహారం',ur:'تقسیم'},{hi:'सटीक भाग',en:'Exact division',gu:'ચોક્કસ ભાગાકાર',mr:'अचूक भागाकार',bn:'নির্ভুল ভাগ',ta:'சரியான வகுத்தல்',te:'ఖచ్చితమైన భాగహారం',ur:'درست تقسیم'}],
+    square:['²',{hi:'वर्ग',en:'Squares',gu:'વર્ગ',mr:'वर्ग',bn:'বর্গ',ta:'வர்க்கம்',te:'వర్గాలు',ur:'مربع'},{hi:'वर्ग संख्याओं का अभ्यास',en:'Square numbers',gu:'વર્ગ સંખ્યાઓ',mr:'वर्ग संख्यांचा सराव',bn:'বর্গ সংখ্যার প্র্যাকটিস',ta:'வர்க்க எண்கள்',te:'వర్గ సంఖ్యలు',ur:'مربع اعداد'}],
+    root:['√',{hi:'वर्गमूल',en:'Square Root',gu:'વર્ગમૂળ',mr:'वर्गमूळ',bn:'বর্গমূল',ta:'வர்க்கமூலம்',te:'వర్గమూలం',ur:'مربع جذر'},{hi:'पूर्ण वर्गमूल का अभ्यास',en:'Perfect roots',gu:'સંપૂર્ણ વર્ગમૂળ',mr:'पूर्ण वर्गमूळ',bn:'পূর্ণ বর্গমূল',ta:'முழு வர்க்கமூலம்',te:'పూర్తి వర్గమూలాలు',ur:'مکمل مربع جذر'}],
+    mixed:['🔀',{hi:'मिश्रित गणना',en:'Mixed Calculation',gu:'મિશ્ર ગણતરી',mr:'मिश्र गणित',bn:'মিশ্র গণনা',ta:'கலப்பு கணக்கீடு',te:'మిశ్రమ గణన',ur:'مخلوط حساب'},{hi:'+ − × ÷ √ ²',en:'+ − × ÷ √ ²',gu:'+ − × ÷ √ ²',mr:'+ − × ÷ √ ²',bn:'+ − × ÷ √ ²',ta:'+ − × ÷ √ ²',te:'+ − × ÷ √ ²',ur:'+ − × ÷ √ ²'}],
+    percentage:['%',{hi:'प्रतिशत',en:'Percentage',gu:'ટકાવારી',mr:'टक्केवारी',bn:'শতাংশ',ta:'சதவீதம்',te:'శాతం',ur:'فیصد'},{hi:'प्रतिशत का अभ्यास',en:'Percent calculations',gu:'ટકાવારી ગણતરી',mr:'टक्केवारी गणना',bn:'শতাংশের হিসাব',ta:'சதவீதக் கணக்குகள்',te:'శాతం లెక్కలు',ur:'فیصد کی مشق'}],
+    fraction:['½',{hi:'भिन्न',en:'Fraction',gu:'અપૂર્ણાંક',mr:'अपूर्णांक',bn:'ভগ্নাংশ',ta:'பின்னம்',te:'భిన్నం',ur:'کسر'},{hi:'भिन्न गणना',en:'Fraction calculations',gu:'અપૂર્ણાંક ગણતરી',mr:'अपूर्णांक गणना',bn:'ভগ্নাংশের হিসাব',ta:'பின்னக் கணக்குகள்',te:'భిన్న లెక్కలు',ur:'کسر کی مشق'}],
+    average:['μ',{hi:'औसत',en:'Average',gu:'સરેરાશ',mr:'सरासरी',bn:'গড়',ta:'சராசரி',te:'సగటు',ur:'اوسط'},{hi:'औसत और माध्य',en:'Average & mean',gu:'સરેરાશ',mr:'सरासरी',bn:'গড় ও mean',ta:'சராசரி',te:'సగటు',ur:'اوسط'}],
+    ratio:['∶',{hi:'अनुपात',en:'Ratio',gu:'ગુણોત્તર',mr:'प्रमाण',bn:'অনুপাত',ta:'விகிதம்',te:'నిష్పత్తి',ur:'تناسب'},{hi:'अनुपात और समानुपात',en:'Ratio & proportion',gu:'ગુણોત્તર',mr:'प्रमाण आणि समानुपात',bn:'অনুপাত ও সমানুপাত',ta:'விகிதம்',te:'నిష్పత్తి',ur:'تناسب'}],
+    lcmhcf:['LCM',{hi:'LCM / HCF',en:'LCM/HCF',gu:'LCM / HCF',mr:'LCM / HCF',bn:'LCM / HCF',ta:'LCM / HCF',te:'LCM / HCF',ur:'LCM / HCF'},{hi:'संख्या गुणधर्म',en:'Number properties',gu:'સંખ્યાના ગુણધર્મો',mr:'संख्यांचे गुणधर्म',bn:'সংখ্যার গুণাবলি',ta:'எண் பண்புகள்',te:'సంఖ్యా లక్షణాలు',ur:'اعداد کی خصوصیات'}],
+    simplification:['≈',{hi:'सरलीकरण',en:'Simplification',gu:'સરળીકરણ',mr:'सुलभीकरण',bn:'সরলীকরণ',ta:'எளிமைப்படுத்தல்',te:'సరళీకరణ',ur:'سادہ کاری'},{hi:'BODMAS का अभ्यास',en:'BODMAS practice',gu:'BODMAS પ્રેક્ટિસ',mr:'BODMAS सराव',bn:'BODMAS অনুশীলন',ta:'BODMAS பயிற்சி',te:'BODMAS సాధన',ur:'BODMAS مشق'}],
+    approximation:['≈',{hi:'सन्निकटन',en:'Approximation',gu:'અંદાજ',mr:'अंदाज',bn:'আনুমানিক',ta:'தோராயம்',te:'సన్నికరణ',ur:'تقریب'},{hi:'त्वरित अनुमान',en:'Quick estimation',gu:'ઝડપી અંદાજ',mr:'जलद अंदाज',bn:'দ্রুত অনুমান',ta:'விரைவு மதிப்பீடு',te:'త్వరిత అంచనా',ur:'فوری اندازہ'}],
+
+  };
+
+  function t() { return T[S.lang] || T.en; }
+  function mt(key) { return M[key] ? (M[key][1][S.lang] || M[key][1].en) : key; }
+  function md(key) { return M[key] ? (M[key][2][S.lang] || M[key][2].en) : ''; }
+  function practiceLabel(){var p={hi:'प्रैक्टिस',en:'Practice',gu:'પ્રેક્ટિસ',mr:'सराव',bn:'প্র্যাকটিস',ta:'பயிற்சி',te:'ప్రాక్టీస్',ur:'پریکٹس'};return p[S.lang]||p.en;}
+  var QTEXT={
+    hi:{hint:{addition:'सही उत्तर निकालें',subtraction:'सही उत्तर निकालें',multiplication:'सही उत्तर निकालें',division:'सही उत्तर निकालें',square:'सही उत्तर निकालें',root:'सही उत्तर निकालें',mixed:'सही उत्तर निकालें',percentage:'प्रतिशत निकालें',fraction:'भिन्न का मान निकालें',average:'औसत निकालें',ratio:'अनुपात पूरा करें',lcmhcf:'सही मान निकालें',simplification:'सरल करें',approximation:'सन्निकट मान निकालें'},of:'का',average:'का औसत',and:'और',round:'को round करें',nearest:'निकटतम'},
+    en:{hint:{addition:'Solve the calculation',subtraction:'Solve the calculation',multiplication:'Solve the calculation',division:'Solve the calculation',square:'Solve the calculation',root:'Solve the calculation',mixed:'Solve the calculation',percentage:'Calculate the percentage',fraction:'Calculate the fraction',average:'Find the average',ratio:'Complete the ratio',lcmhcf:'Find the correct value',simplification:'Simplify the expression',approximation:'Round to the nearest value'},of:'of',average:'Average of',and:'and',round:'Round',nearest:'to nearest'},
+    gu:{hint:{addition:'ગણતરી ઉકેલો',subtraction:'ગણતરી ઉકેલો',multiplication:'ગણતરી ઉકેલો',division:'ગણતરી ઉકેલો',square:'ગણતરી ઉકેલો',root:'ગણતરી ઉકેલો',mixed:'ગણતરી ઉકેલો',percentage:'ટકાવારી ગણો',fraction:'ભિન્નનું મૂલ્ય ગણો',average:'સરેરાશ શોધો',ratio:'ગુણોત્તર પૂર્ણ કરો',lcmhcf:'સાચું મૂલ્ય શોધો',simplification:'સરળ કરો',approximation:'નજીકનું મૂલ્ય શોધો'},of:'નું',average:'સરેરાશ',and:'અને',round:'Round',nearest:'nearest'},
+    mr:{hint:{addition:'गणित सोडवा',subtraction:'गणित सोडवा',multiplication:'गणित सोडवा',division:'गणित सोडवा',square:'गणित सोडवा',root:'गणित सोडवा',mixed:'गणित सोडवा',percentage:'टक्केवारी काढा',fraction:'अपूर्णांकाचे मूल्य काढा',average:'सरासरी काढा',ratio:'प्रमाण पूर्ण करा',lcmhcf:'योग्य मूल्य शोधा',simplification:'सुलभ करा',approximation:'जवळचे मूल्य शोधा'},of:'चे',average:'सरासरी',and:'आणि',round:'Round',nearest:'nearest'},
+    bn:{hint:{addition:'হিসাব করুন',subtraction:'হিসাব করুন',multiplication:'হিসাব করুন',division:'হিসাব করুন',square:'হিসাব করুন',root:'হিসাব করুন',mixed:'হিসাব করুন',percentage:'শতাংশ হিসাব করুন',fraction:'ভগ্নাংশের মান বের করুন',average:'গড় বের করুন',ratio:'অনুপাত পূরণ করুন',lcmhcf:'সঠিক মান বের করুন',simplification:'সরল করুন',approximation:'নিকটতম মান বের করুন'},of:'এর',average:'গড়',and:'এবং',round:'Round',nearest:'nearest'},
+    ta:{hint:{addition:'கணக்கிடுங்கள்',subtraction:'கணக்கிடுங்கள்',multiplication:'கணக்கிடுங்கள்',division:'கணக்கிடுங்கள்',square:'கணக்கிடுங்கள்',root:'கணக்கிடுங்கள்',mixed:'கணக்கிடுங்கள்',percentage:'சதவீதத்தை கணக்கிடுங்கள்',fraction:'பின்னத்தின் மதிப்பைக் கணக்கிடுங்கள்',average:'சராசரியைக் கண்டறியுங்கள்',ratio:'விகிதத்தை நிரப்புங்கள்',lcmhcf:'சரியான மதிப்பைக் கண்டறியுங்கள்',simplification:'எளிமைப்படுத்துங்கள்',approximation:'அருகிலுள்ள மதிப்பைக் கண்டறியுங்கள்'},of:'இன்',average:'சராசரி',and:'மற்றும்',round:'Round',nearest:'nearest'},
+    te:{hint:{addition:'లెక్కించండి',subtraction:'లెక్కించండి',multiplication:'లెక్కించండి',division:'లెక్కించండి',square:'లెక్కించండి',root:'లెక్కించండి',mixed:'లెక్కించండి',percentage:'శాతాన్ని లెక్కించండి',fraction:'భిన్నం విలువను లెక్కించండి',average:'సగటును కనుగొనండి',ratio:'నిష్పత్తిని పూర్తి చేయండి',lcmhcf:'సరైన విలువను కనుగొనండి',simplification:'సరళీకరించండి',approximation:'సమీప విలువను కనుగొనండి'},of:'లో',average:'సగటు',and:'మరియు',round:'Round',nearest:'nearest'},
+    ur:{hint:{addition:'حساب حل کریں',subtraction:'حساب حل کریں',multiplication:'حساب حل کریں',division:'حساب حل کریں',square:'حساب حل کریں',root:'حساب حل کریں',mixed:'حساب حل کریں',percentage:'فیصد معلوم کریں',fraction:'کسر کی قدر معلوم کریں',average:'اوسط معلوم کریں',ratio:'تناسب مکمل کریں',lcmhcf:'صحیح قدر معلوم کریں',simplification:'سادہ کریں',approximation:'قریب ترین قدر معلوم کریں'},of:'کا',average:'اوسط',and:'اور',round:'Round',nearest:'nearest'}
+  };
+  function qtxt(key){var q=QTEXT[S.lang]||QTEXT.en;return q[key]||QTEXT.en[key]||'';}
+  function questionHint(){var q=QTEXT[S.lang]||QTEXT.en;return (q.hint&&q.hint[S.m])||(QTEXT.en.hint[S.m])||t().hint;}
+
+  function loadProfileDefaults(){
+    var raw=storeGet('cbProfileDefaults');
+    if(raw){try{var p=JSON.parse(raw);for(var k in p){if(Object.prototype.hasOwnProperty.call(UI_CONFIG,k))UI_CONFIG[k]=p[k];}}catch(e){}}
+    S.keyboard=UI_CONFIG.defaultKeyboard||'calculator';
+    S.timer=parseInt(UI_CONFIG.defaultTimer,10);
+  }
+  function openProfile(){
+    $('profile').className='overlay show';
+    $('profileNameInput').value=UI_CONFIG.profileName||'My Profile';
+    $('defaultKeyboardSetting').value=UI_CONFIG.defaultKeyboard;
+    $('defaultTimerSetting').value=String(UI_CONFIG.defaultTimer||60);
+    $('feedbackDurationSetting').value=UI_CONFIG.feedbackDurationMs;
+    $('wrongClearSetting').value=UI_CONFIG.wrongClearDelayMs;
+    $('borderSetting').value=UI_CONFIG.signalBorderPx;
+    $('blinkSetting').value=UI_CONFIG.wrongBlinkCount;
+    $('vibrateSetting').value=UI_CONFIG.wrongVibrateMs;
+  }
+  function closeProfile(){ $('profile').className='overlay'; }
+  function saveProfile(){
+    UI_CONFIG.profileName=($('profileNameInput').value||'My Profile').trim().slice(0,30)||'My Profile';
+    UI_CONFIG.defaultKeyboard=$('defaultKeyboardSetting').value;
+    UI_CONFIG.defaultTimer=parseInt($('defaultTimerSetting').value,10);
+    UI_CONFIG.feedbackDurationMs=Math.max(100,parseInt($('feedbackDurationSetting').value,10)||280);
+    UI_CONFIG.wrongClearDelayMs=Math.max(500,parseInt($('wrongClearSetting').value,10)||2000);
+    UI_CONFIG.signalBorderPx=Math.max(2,Math.min(8,parseInt($('borderSetting').value,10)||4));
+    UI_CONFIG.wrongBlinkCount=Math.max(1,Math.min(10,parseInt($('blinkSetting').value,10)||5));
+    UI_CONFIG.wrongVibrateMs=Math.max(0,Math.min(1000,parseInt($('vibrateSetting').value,10)||0));
+    storeSet('cbProfileDefaults',JSON.stringify({profileName:UI_CONFIG.profileName,defaultKeyboard:UI_CONFIG.defaultKeyboard,defaultTimer:UI_CONFIG.defaultTimer,feedbackDurationMs:UI_CONFIG.feedbackDurationMs,wrongClearDelayMs:UI_CONFIG.wrongClearDelayMs,signalBorderPx:UI_CONFIG.signalBorderPx,wrongBlinkCount:UI_CONFIG.wrongBlinkCount,wrongVibrateMs:UI_CONFIG.wrongVibrateMs}));
+    $('profileName').textContent=UI_CONFIG.profileName;$('profileSub').textContent='Default practice settings';
+    closeProfile();
+  }
+  function resetProfileDefaults(){
+    UI_CONFIG.defaultKeyboard='calculator';
+    UI_CONFIG.defaultTimer=60;
+    UI_CONFIG.feedbackDurationMs=280;
+    UI_CONFIG.wrongClearDelayMs=2000;
+    UI_CONFIG.signalBorderPx=4;
+    UI_CONFIG.wrongBlinkCount=5;
+    UI_CONFIG.wrongVibrateMs=180;
+    UI_CONFIG.profileName='My Profile';
+    try{window.localStorage.removeItem('cbProfileDefaults');}catch(e){}
+    $('profileNameInput').value=UI_CONFIG.profileName;
+    $('defaultKeyboardSetting').value=UI_CONFIG.defaultKeyboard;
+    $('defaultTimerSetting').value=(['60','120','180','300','600','1200'].indexOf(String(UI_CONFIG.defaultTimer))>=0?String(UI_CONFIG.defaultTimer):'custom');
+    $('feedbackDurationSetting').value=UI_CONFIG.feedbackDurationMs;
+    $('wrongClearSetting').value=UI_CONFIG.wrongClearDelayMs;
+    $('borderSetting').value=UI_CONFIG.signalBorderPx;
+    $('blinkSetting').value=UI_CONFIG.wrongBlinkCount;
+    $('vibrateSetting').value=UI_CONFIG.wrongVibrateMs;
+    S.keyboard=UI_CONFIG.defaultKeyboard;
+    S.timer=UI_CONFIG.defaultTimer;
+    alert('Default settings reset.');
+  }
+  function toggleTheme() { S.dark = !S.dark; applyTheme(); }
+  function applyTheme() {
+    if (S.dark) document.body.classList.add('dark'); else document.body.classList.remove('dark');
+    $('theme').innerHTML = S.dark ? '☀️' : '🌙';
+    storeSet('cbDark', S.dark ? '1' : '0');
+  }
+  function changeLang(lang) {
+    if (!T[lang]) lang='en';
+    S.lang=lang; storeSet('cbLang',lang); render();
+    if ($('gate').className.indexOf('show') !== -1) buildGate();
+    if ($('practice').className.indexOf('active') !== -1) { buildSettings(); newQ(); updateClock(); renderAttempts(); }
+  }
+  function render() {
+    var x,i,key;
+    $('sub').innerHTML=t().sub; if($('choose')) $('choose').innerHTML=t().choose; $('back').innerHTML=t().back;
+    $('sc').innerHTML=t().correct; $('sw').innerHTML=t().wrong; $('sa').innerHTML=t().accuracy; $('pill').innerHTML=t().practice;
+    if($('moreTitle')) $('moreTitle').innerHTML=t().moreTitle; if($('moreText')) $('moreText').innerHTML=t().moreText;
+    x=$('langSelect'); if(x) x.value=S.lang;
+    for(i in M) { if(Object.prototype.hasOwnProperty.call(M,i)){ key='m_'+i; if($(key))$(key).innerHTML=M[i][1][S.lang]||M[i][1].en; key='d_'+i; if($(key))$(key).innerHTML=M[i][2][S.lang]||M[i][2].en; } }
+    document.documentElement.lang=S.lang; document.documentElement.dir=S.lang==='ur'?'rtl':'ltr';renderHomeProgress();
+  }
+
+  function openGate(m) {
+    S.m=m; S.timer=parseInt(UI_CONFIG.defaultTimer,10); S.keyboard=UI_CONFIG.defaultKeyboard; buildGate(); $('gate').className='overlay show';
+    if (!S.gateHistory) {
+      S.gateHistory=true;
+      try { window.history.pushState({gate:true}, '', window.location.href); } catch(e) { S.gateHistory=false; }
+    }
+  }
+  function closeGate(fromPop) {
+    if ($('gate').className.indexOf('show') === -1) return;
+    if (!fromPop && S.gateHistory) {
+      S.gateHistory=false;
+      try { window.history.back(); return; } catch(e) {}
+    }
+    S.gateHistory=false; $('gate').className='overlay';
+  }
+  function resolveTimerSelection(el, fallback){
+    if(!el) return Math.max(60, fallback||60);
+    if(el.value==='custom'){
+      var raw=window.prompt('Enter custom time in minutes (minimum 1 minute):','15');
+      var mins=parseFloat(raw);
+      if(!Number.isFinite(mins) || mins<1) mins=1;
+      return Math.round(mins*60);
+    }
+    var sec=parseInt(el.value,10);
+    return Math.max(60,Number.isFinite(sec)?sec:(fallback||60));
+  }
+  function buildGate() {
+    var t0=t(), m=M[S.m], f='';
+    $('gateIcon').innerHTML=m[0]; $('gateTitle').innerHTML=mt(S.m)+' '+practiceLabel(); $('gateText').innerHTML=md(S.m);
+    if (S.m==='tables') {
+      f='<div class="field"><label>'+t0.from+'</label><select id="gf">';
+      for(var i=1;i<=100;i++) f+='<option value="'+i+'">'+i+'</option>';
+      f+='</select></div><div class="field"><label>'+t0.to+'</label><select id="gt">';
+      for(var j=1;j<=100;j++) f+='<option value="'+j+'">'+j+'</option>';
+      f+='</select></div><div class="help">'+t0.mult+'</div>';
+    } else {
+      f='<div class="field"><label>'+t0.difficulty+'</label><select id="gd"><option value="easy">'+t0.easy+'</option><option value="moderate">Moderate</option><option value="hard">'+t0.hard+'</option><option value="challenging">Challenging</option><option value="expert">Expert</option></select></div>';
+    }
+    f+='<div class="field"><label>'+t0.time+'</label><select id="gm"><option value="60">'+t0.one+'</option><option value="120">'+t0.two+'</option><option value="180">3 min</option><option value="300">'+t0.five+'</option><option value="600">'+t0.ten+'</option><option value="1200">20 min</option><option value="custom">Custom</option></select></div>';
+    $('gateFields').innerHTML=f; $('gm').value=(['60','120','180','300','600','1200'].indexOf(String(UI_CONFIG.defaultTimer))>=0?String(UI_CONFIG.defaultTimer):'custom');
+    if (S.m==='tables') { $('gf').value=String(S.from || 1); $('gt').value=String(S.to || 20); }
+    $('gateStart').innerHTML=t0.gateStart; $('gateBack').innerHTML=t0.gateBack;
+  }
+  function syncPracticeUiState(){
+    document.body.classList.toggle('table-practice', S.m==='tables');
+    document.body.classList.toggle('feature-practice', S.m!=='tables');
+  }
+
+  function startFromGate() {
+    document.body.classList.remove('results-preview');
+    hidePracticeKeyboard();
+    if (S.gateHistory) { S.gateHistory=false; try { window.history.back(); } catch(e) {} }
+    $('gate').className='overlay';
+    syncPracticeUiState();
+    if (S.m==='tables') {
+      S.from=parseInt($('gf').value,10); S.to=parseInt($('gt').value,10);
+      if (S.from>S.to) S.to=S.from;
+    } else S.diff=$('gd').value;
+    /* Gate timer is scoped to this tool/session; it never changes the global default. */
+    S.timer=resolveTimerSelection($('gm'), UI_CONFIG.defaultTimer);
+    S.keyboard=UI_CONFIG.defaultKeyboard;
+    $('home').className='screen'; $('practice').className='screen active';
+    buildSettings(); resetScore(); startTimer(); newQ(); renderAttempts();
+  }
+
+  function buildSettings() {
+    var t0=t(), h='', i;
+    if (S.m==='tables') {
+      h='<div class="title">'+t0.from+' '+S.from+' — '+t0.to+' '+S.to+'</div><div class="grid"><div><label>'+t0.from+'</label><select id="from">';
+      for(i=1;i<=100;i++) h+='<option value="'+i+'">'+i+'</option>';
+      h+='</select></div><div><label>'+t0.to+'</label><select id="to">';
+      for(i=1;i<=100;i++) h+='<option value="'+i+'">'+i+'</option>';
+      h+='</select></div></div><div class="help">'+t0.hint+' • '+t0.mult+'</div>';
+    } else {
+      h='<div class="title">'+mt(S.m)+'</div><div class="grid"><div><label>'+t0.difficulty+'</label><select id="diff"><option value="easy">'+t0.easy+'</option><option value="moderate">Moderate</option><option value="hard">'+t0.hard+'</option><option value="challenging">Challenging</option><option value="expert">Expert</option></select></div><div><label>'+t0.time+'</label><select id="mt"><option value="60">'+t0.one+'</option><option value="120">'+t0.two+'</option><option value="180">3 min</option><option value="300">'+t0.five+'</option><option value="600">'+t0.ten+'</option><option value="1200">20 min</option><option value="custom">Custom</option></select></div></div>';
+    }
+    h += '';
+    $('settings').innerHTML=h;
+    if (S.m==='tables') {
+      $('from').value=String(S.from); $('to').value=String(S.to);
+      $('from').onchange=function(){S.from=parseInt($('from').value,10);rangeChange();};
+      $('to').onchange=function(){S.to=parseInt($('to').value,10);rangeChange();};
+    } else {
+      $('diff').value=S.diff; $('mt').value=(['60','120','180','300','600','1200'].indexOf(String(S.timer))>=0?String(S.timer):'custom');
+      $('diff').onchange=function(){S.diff=$('diff').value;resetScore();startTimer();newQ();};
+      $('mt').onchange=function(){S.timer=resolveTimerSelection($('mt'), S.timer);$('mt').value=(['60','120','180','300','600','1200'].indexOf(String(S.timer))>=0?String(S.timer):'custom');resetScore();startTimer();newQ();};
+    }
+  }
+  function rangeChange(){if(S.from>S.to){S.to=S.from;$('to').value=String(S.to);}resetScore();startTimer();newQ();}
+  function goHome(){stopTimer();document.body.classList.remove('results-preview');hidePracticeKeyboard();document.body.classList.remove('table-practice','feature-practice');$('practice').className='screen';$('home').className='screen active';renderHomeProgress();}
+  function resetScore(){S.c=0;S.w=0;S.streak=0;S.bestStreakSession=0;S.locked=false;S.wrongQuestions=[];S.skippedQuestions=[];S.answerHistory=[];stats();}
+  function stats(){var n=S.c+S.w;$('c').innerHTML=S.c;$('w').innerHTML=S.w;$('acc').innerHTML=n?Math.round(S.c/n*100)+'%':'0%';var ls=$('liveStreak');if(ls)ls.innerHTML='🔥 Streak: '+S.streak+(S.bestStreakSession>=5?' • Best: '+S.bestStreakSession:'');}
+  function stopTimer(){if(S.id){window.clearInterval(S.id);S.id=null;}}
+  function startTimer(){stopTimer();S.left=S.timer;updateClock();if(S.timer>0){S.id=window.setInterval(function(){S.left--;updateClock();if(S.left<=0){stopTimer();finishTime();}},1000);}}
+  function updateClock(){
+    var el=$('timer');
+    if(!S.timer){el.innerHTML=t().time+' Off';return;}
+    var mm=Math.floor(S.left/60), ss=S.left%60;
+    el.innerHTML='⏱ '+(mm<10?'0':'')+mm+':'+(ss<10?'0':'')+ss;
+  }
+  /* =========================================================
+     CALCULATION BOOSTER v36
+     COMMON PRACTICE ENGINE FOUNDATION
+
+     RULE:
+     - Shared UI, keyboard, feedback, timer, results and history
+       stay inside the common engine.
+     - Every tool registers only its own generator and difficulty rules.
+     - New tools must be added through TOOL_REGISTRY, not through a new UI.
+     ========================================================= */
+  var PRACTICE_ENGINE={
+    levels:['easy','moderate','hard','challenging','expert'],
+    current:null,
+    setTool:function(id){
+      this.current=TOOL_REGISTRY[id]||null;
+      return this.current;
+    },
+    getTool:function(id){return TOOL_REGISTRY[id]||null;},
+    generate:function(){
+      var tool=this.getTool(S.m);
+      if(!tool){
+        commonPracticeQuestion('Practice','<div class="number">Tool unavailable</div>',0);
+        return;
+      }
+      this.current=tool;
+      tool.generate();
+    },
+    level:function(){return S.diff||'easy';},
+    rules:function(){
+      var tool=this.getTool(S.m)||{};
+      return (tool.difficulty&&tool.difficulty[this.level()])||{};
+    }
+  };
+
+  /* Tool Registry: one central place for all practice modules.
+     Generator functions are the existing proven generators from v35.
+     The next migration step will move each generator's level maths into
+     its difficulty config while preserving this shared engine. */
+  var TOOL_REGISTRY={
+    tables:{generate:function(){tableQ();},difficulty:{easy:{},moderate:{},hard:{},challenging:{},expert:{}}},
+    addition:{generate:function(){arith('+');},difficulty:{easy:{},moderate:{},hard:{},challenging:{},expert:{}}},
+    subtraction:{generate:function(){arith('-');},difficulty:{easy:{},moderate:{},hard:{},challenging:{},expert:{}}},
+    multiplication:{generate:function(){arith('×');},difficulty:{easy:{},moderate:{},hard:{},challenging:{},expert:{}}},
+    division:{generate:function(){divQ();},difficulty:{easy:{},moderate:{},hard:{},challenging:{},expert:{}}},
+    square:{generate:function(){squareQ();},difficulty:{easy:{},moderate:{},hard:{},challenging:{},expert:{}}},
+    root:{generate:function(){rootQ();},difficulty:{easy:{},moderate:{},hard:{},challenging:{},expert:{}}},
+    mixed:{generate:function(){mixedQ();},difficulty:{easy:{},moderate:{},hard:{},challenging:{},expert:{}}},
+    percentage:{generate:function(){percentageQ();},difficulty:{easy:{type:'friendly percentages'},moderate:{},hard:{},challenging:{},expert:{}}},
+    fraction:{generate:function(){fractionQ();},difficulty:{easy:{},moderate:{},hard:{},challenging:{},expert:{}}},
+    average:{generate:function(){averageQ();},difficulty:{easy:{},moderate:{},hard:{},challenging:{},expert:{}}},
+    ratio:{generate:function(){ratioQ();},difficulty:{easy:{},moderate:{},hard:{},challenging:{},expert:{}}},
+    lcmhcf:{generate:function(){lcmhcfQ();},difficulty:{easy:{},moderate:{},hard:{},challenging:{},expert:{}}},
+    simplification:{generate:function(){simplificationQ();},difficulty:{easy:{},moderate:{},hard:{},challenging:{},expert:{}}},
+    approximation:{generate:function(){approximationQ();},difficulty:{easy:{},moderate:{},hard:{},challenging:{},expert:{}}}
+  };
+
+  function bounds(){
+    if(S.diff==='expert')return[500,2000];
+    if(S.diff==='challenging')return[150,500];
+    if(S.diff==='hard')return[50,150];
+    if(S.diff==='moderate')return[15,50];
+    return[1,15];
+  }
+  function r(a,b){return Math.floor(Math.random()*(b-a+1))+a;}
+  function inp(id,ph){id=id||'ans';ph=ph||'00';var wrap=(S.m==='tables'?'':'<div class="question-single-input">');var end=(S.m==='tables'?'':'</div>');return wrap+'<input id="'+id+'" type="text" inputmode="none" readonly autocomplete="off" maxlength="12" placeholder="'+ph+'">'+end;}
+  function newQ(){
+    document.body.classList.remove('results-preview');
+    S.locked=false;$('feedback').innerHTML='';$('feedback').className='feedback';clearAnswerState();
+    PRACTICE_ENGINE.setTool(S.m);
+    PRACTICE_ENGINE.generate();
+  }
+  function tableQ(){
+    var a=r(S.from,S.to),b=r(1,10),x;
+    S.target=a*b;S.pairs=[];S.currentQuestionText=t().hint+' '+S.target;S.currentAnswerText='One correct answer: '+a+' × '+b;S.currentQuestionKey='tables|'+S.target;
+    for(x=S.from;x<=S.to;x++)if(S.target%x===0&&S.target/x<=10)S.pairs.push([x,S.target/x]);
+    $('pill').innerHTML=mt('tables');
+    $('question').innerHTML='<div class="practice-content"><div class="help">'+t().hint+'</div><div class="number">'+S.target+'</div><div class="answer">'+inp('a','00')+'<div class="op">×</div>'+inp('b','0')+'</div></div>'+buttons();
+    bind();
+  }
+  // Every tool is rebuilt from the same Table practice UI shell.
+  // Only the question generator/target changes; layout and controls never do.
+  function commonPracticeQuestion(label, contentHtml, target){
+    S.target=target;
+    S.currentQuestionText=String(contentHtml).replace(/<[^>]*>/g,'').replace(/\s+/g,' ').trim();
+    S.currentAnswerText=String(target);
+    S.currentQuestionKey=S.m+'|'+S.currentQuestionText+'|'+S.currentAnswerText;
+    $('pill').innerHTML=label;
+    $('question').innerHTML='<div class="practice-content"><div class="help">'+questionHint()+'</div>'+contentHtml+'<div class="answer single-answer"><input id="ans" type="text" inputmode="none" readonly autocomplete="off" maxlength="12" placeholder="00"></div></div>'+buttons();
+    bind();
+  }
+  function arith(op){
+    var bnd=bounds(),lo=bnd[0],hi=bnd[1],a=r(lo,hi),b=r(lo,hi);
+    if(op==='-'&&b>a){var tmp=a;a=b;b=tmp;}
+    var target=op==='+'?a+b:(op==='-'?a-b:a*b);
+    commonPracticeQuestion(mt(S.m),'<div class="number">'+a+' '+op+' '+b+' = ?</div>',target);
+  }
+  function divQ(){var bnd=bounds(),b=r(2,12),q=r(bnd[0],bnd[1]),a=b*q;commonPracticeQuestion(mt('division'),'<div class="number">'+a+' ÷ '+b+' = ?</div>',q);}
+  function squareQ(){var bnd=bounds(),a=r(bnd[0],bnd[1]);commonPracticeQuestion(mt('square'),'<div class="number">'+a+'² = ?</div>',a*a);}
+  function rootQ(){var bnd=bounds(),a=r(bnd[0],bnd[1]);commonPracticeQuestion(mt('root'),'<div class="number">√'+(a*a)+' = ?</div>',a);}
+  function mixedQ(){var ops=['+','-','×','÷','²','√'],op=ops[r(0,ops.length-1)];if(op==='²')squareQ();else if(op==='√')rootQ();else if(op==='÷')divQ();else{arith(op);$('pill').innerHTML=mt('mixed');}}
+  function gcd(a,b){while(b){var t=a%b;a=b;b=t;}return a;}
+  function percentageQ(){
+    var pList={
+      easy:[1,2,5,10,20,25,30,50],
+      moderate:[5,10,15,20,25,30,40,50,60,75],
+      hard:[5,10,12.5,15,20,25,30,40,50,60,75],
+      challenging:[7.5,10,12.5,15,17.5,20,22.5,25,30,35,40,50,62.5,75],
+      expert:[12.5,16.6667,22.5,27.5,33.3333,37.5,42.5,58.3333,62.5,66.6667,83.3333,87.5]
+    };
+    var ps=pList[S.diff]||pList.easy, p=ps[r(0,ps.length-1)], n, target;
+    if(S.diff==='easy'){
+      var bases=[20,40,50,80,100,200];
+      n=bases[r(0,bases.length-1)];
+      if(p===1) n=bases[r(0,bases.length-1)];
+    }else if(S.diff==='moderate'){
+      var basesM=[20,30,40,50,60,80,100,120,150,200];
+      n=basesM[r(0,basesM.length-1)];
+    }else{
+      var mult=Math.max(1,Math.round(100/(p<1?p:1)));
+      var maxN=S.diff==='expert'?2000:(S.diff==='challenging'?800:(S.diff==='hard'?400:250));
+      n=r(2,Math.max(3,Math.floor(maxN/Math.max(1,Math.round(p)))))*Math.max(1,Math.round(p));
+      if(p===33.3333){ n=[30,60,90,120,150,300][r(0,5)]; }
+    }
+    target=n*p/100;
+    if(!Number.isInteger(target)){
+      var tries=0;
+      while(!Number.isInteger(target) && tries++<30){
+        n+=Math.max(1,Math.round(100/p)); target=n*p/100;
+      }
+    }
+    commonPracticeQuestion(mt('percentage'),'<div class="number">'+p+'% '+qtxt('of')+' '+n+' = ?</div>',target);
+  }
+  function fractionQ(){
+    var sets={
+      easy:[[1,2],[1,3],[1,4],[1,5],[2,3],[3,4]],
+      moderate:[[1,2],[1,3],[1,4],[1,5],[2,3],[3,4],[2,5],[3,5],[4,5],[5,6]],
+      hard:[[1,4],[1,5],[2,5],[3,5],[3,8],[5,8],[2,7],[3,7],[4,7],[5,8]],
+      challenging:[[2,7],[3,7],[4,7],[3,8],[5,8],[4,9],[5,9],[7,10],[5,11]],
+      expert:[[3,7],[5,8],[4,9],[5,11],[7,12],[5,13],[7,15],[11,16]]
+    };
+    var set=sets[S.diff]||sets.easy, pair=set[r(0,set.length-1)], num=pair[0], den=pair[1];
+    var maxWhole=S.diff==='easy'?20:(S.diff==='moderate'?60:(S.diff==='hard'?150:(S.diff==='challenging'?400:1000))); 
+    var k=r(2,Math.max(2,Math.floor(maxWhole/den))), whole=den*k, target=whole*num/den;
+    commonPracticeQuestion(mt('fraction'),'<div class="number">'+num+'/'+den+' '+qtxt('of')+' '+whole+' = ?</div>',target);
+  }
+  function averageQ(){
+    var max=S.diff==='easy'?15:(S.diff==='moderate'?50:(S.diff==='hard'?150:(S.diff==='challenging'?500:1500)));
+    var count=S.diff==='easy'?2:(S.diff==='moderate'?2:3), target=r(2,Math.max(2,Math.floor(max*0.8))), vals=[], sum=0, i;
+    for(i=0;i<count-1;i++){var v=r(1,max);vals.push(v);sum+=v;}
+    var last=target*count-sum;
+    if(last<1||last>max){return averageQ();}
+    vals.push(last);
+    commonPracticeQuestion(mt('average'),'<div class="number">'+qtxt('average')+' '+vals.join(', ')+' = ?</div>',target);
+  }
+  function ratioQ(){
+    var sets={
+      easy:[[1,2],[1,3],[2,3],[1,4],[2,5],[3,4],[4,5]],
+      moderate:[[1,2],[1,3],[2,3],[3,4],[2,5],[3,5],[4,5],[3,7],[4,7]],
+      hard:[[2,3],[3,4],[2,5],[3,5],[4,5],[3,7],[4,7],[5,8],[5,9]],
+      challenging:[[3,7],[4,7],[5,8],[5,9],[7,10],[7,12],[8,13]],
+      expert:[[5,8],[7,11],[8,13],[9,14],[11,16],[13,17]]
+    };
+    var pair=(sets[S.diff]||sets.easy)[r(0,(sets[S.diff]||sets.easy).length-1)], a=pair[0], b=pair[1];
+    var scale=S.diff==='easy'?r(1,5):(S.diff==='moderate'?r(2,8):(S.diff==='hard'?r(3,12):(S.diff==='challenging'?r(4,20):r(5,30))));
+    var total=(a+b)*scale, target=a*scale, other=b*scale;
+    commonPracticeQuestion(mt('ratio'),'<div class="number">'+a+' : '+b+' = ? : '+other+'</div>',target);
+  }
+  function lcm(a,b){return Math.abs(a*b)/gcd(a,b);}
+  function lcmhcfQ(){
+    var max=S.diff==='easy'?10:(S.diff==='moderate'?20:(S.diff==='hard'?50:(S.diff==='challenging'?120:300)));
+    var a=r(2,max),b=r(2,max),ask=Math.random()<0.5,target=ask?lcm(a,b):gcd(a,b);
+    commonPracticeQuestion(mt('lcmhcf'),'<div class="number">'+(ask?'LCM':'HCF')+' '+qtxt('of')+' '+a+' '+qtxt('and')+' '+b+' = ?</div>',target);
+  }
+  function simplificationQ(){
+    var max=S.diff==='easy'?12:(S.diff==='moderate'?40:(S.diff==='hard'?150:(S.diff==='challenging'?600:2000)));
+    var a=r(1,max),b=r(1,Math.min(max,12)), op;
+    if(S.diff==='easy') op=['+','-','×'][r(0,2)];
+    else op=['+','-','×','÷'][r(0,3)];
+    var target;
+    if(op==='-'){if(b>a){var tmp=a;a=b;b=tmp;}target=a-b;}
+    else if(op==='+')target=a+b;
+    else if(op==='×')target=a*b;
+    else {b=r(2,12);target=r(1,Math.max(1,Math.floor(max/b)));a=b*target;}
+    commonPracticeQuestion(mt('simplification'),'<div class="number">'+a+' '+op+' '+b+' = ?</div>',target);
+  }
+  function approximationQ(){
+    var max=S.diff==='easy'?99:(S.diff==='moderate'?999:(S.diff==='hard'?9999:(S.diff==='challenging'?99999:9999999)));
+    var a=r(10,max), step=S.diff==='easy'?10:(S.diff==='moderate'?10:(S.diff==='hard'?100:(S.diff==='challenging'?100:1000)));
+    var target=Math.round(a/step)*step;
+    commonPracticeQuestion(mt('approximation'),'<div class="number">'+qtxt('round')+' '+a+' '+qtxt('nearest')+' '+step+' = ?</div>',target);
+  }
+  function buttons(){
+    return '<div id="inlineFeedback" class="feedback-slot" aria-live="polite"></div><div class="actionbar"><button class="btn primary" onclick="submitAnswer()">'+t().check+'</button><button class="btn secondary" onclick="skip()">'+t().skip+'</button></div>';
+  }
+  function bind(){
+    var nodes=document.querySelectorAll('#question input'),i;
+    for(i=0;i<nodes.length;i++){
+      nodes[i].onclick=function(){setActiveInput(this);};
+      nodes[i].onfocus=function(){setActiveInput(this);};
+      nodes[i].onkeydown=function(e){e=e||window.event;if(e.keyCode===8){if(e.preventDefault)e.preventDefault();kbBackspace();}else if(e.keyCode>=48&&e.keyCode<=57){if(e.preventDefault)e.preventDefault();kbAdd(String(e.keyCode-48));}else if(e.keyCode===13){if(e.preventDefault)e.preventDefault();keyboardEnter();}};
+    }
+    if(nodes.length){setActiveInput(nodes[0]);}
+  }
+  function setActiveInput(el){
+    if(!el)return; S.activeInput=el; showPracticeKeyboard();
+    try{el.focus({preventScroll:true});}catch(e){try{el.focus();}catch(e2){}}
+    // Every practice feature uses the same table-style interface and shared control logic.
+    setTimeout(ensurePracticeControlsVisible,120);
+  }
+  function showPracticeKeyboard(){
+    var kb=$('practiceKeyboard'); if(!kb)return;
+    document.body.classList.toggle('common-actions-enabled', UI_CONFIG.keepActionsAboveKeyboard);
+
+    document.documentElement.style.setProperty('--feedback-space', UI_CONFIG.feedbackHeightPx+'px');
+    document.documentElement.style.setProperty('--feedback-gap', UI_CONFIG.feedbackGapPx+'px');
+
+    buildKeyboard(); kb.className='practice-kb show'; kb.setAttribute('aria-hidden','false'); document.documentElement.style.setProperty('--custom-kb-height', kb.offsetHeight+'px'); document.body.className=document.body.className.replace(/\bkeyboard-active\b/g,'')+' keyboard-active';
+    setTimeout(ensurePracticeControlsVisible,40);
+  }
+  function ensurePracticeControlsVisible(){
+    if(!S.activeInput)return;
+    var input=S.activeInput, bar=document.querySelector('.actionbar');
+    var vv=window.visualViewport;
+    var viewportTop=vv?vv.offsetTop:0, viewportBottom=vv?vv.height:window.innerHeight;
+    var topSafe=viewportTop+12, bottomSafe=viewportBottom-12;
+    var ir=input.getBoundingClientRect(), br=bar?bar.getBoundingClientRect():null;
+    var delta=0;
+    /* Scroll the document so input + its normal-flow action buttons sit above the keyboard. Nothing is fixed except the keyboard. */
+    if(ir.top<topSafe) delta=ir.top-topSafe;
+    if(ir.bottom>bottomSafe) delta=Math.max(delta,ir.bottom-bottomSafe);
+    if(br && br.bottom>bottomSafe) delta=Math.max(delta,br.bottom-bottomSafe);
+    if(delta){
+      var scroller=document.scrollingElement||document.documentElement;
+      scroller.scrollTop=Math.max(0,scroller.scrollTop+delta);
+    }
+    try{input.focus({preventScroll:true});}catch(e){}
+  }
+  function markAnswerState(ok){
+    var nodes=document.querySelectorAll('#question input'),i;
+    for(i=0;i<nodes.length;i++){
+      nodes[i].classList.remove('answer-wrong','answer-correct');
+      // Force a reflow so the same feedback animation/vibration is visible on every consecutive wrong answer.
+      void nodes[i].offsetWidth;
+      nodes[i].style.setProperty('--signal-border',UI_CONFIG.signalBorderPx+'px'); nodes[i].style.setProperty('--wrong-blink-count',UI_CONFIG.wrongBlinkCount); nodes[i].classList.add(ok?'answer-correct':'answer-wrong');
+    }
+    if(!ok && UI_CONFIG.wrongVibrateMs && navigator.vibrate){try{navigator.vibrate(UI_CONFIG.wrongVibrateMs);}catch(e){}}
+  }
+  function clearAnswerState(){
+    var nodes=document.querySelectorAll('#question input'),i;
+    for(i=0;i<nodes.length;i++)nodes[i].classList.remove('answer-wrong','answer-correct');
+    if(S.wrongClearTimer){window.clearTimeout(S.wrongClearTimer);S.wrongClearTimer=null;}
+  }
+  function hidePracticeKeyboard(){
+    var kb=$('practiceKeyboard'); if(!kb)return; document.body.classList.remove('common-actions-enabled'); kb.className='practice-kb'; kb.setAttribute('aria-hidden','true'); document.body.className=document.body.className.replace(/\s*keyboard-active\b/g,''); S.activeInput=null;
+  }
+  function buildKeyboard(){
+    var box=$('kbInner'),t0=t(),rows=[]; if(!box)return;
+    // Decimal input: digits + decimal + backspace, with Enter as a full-width row below.
+    if(S.keyboard==='dial'){
+      rows=[['1','2','3'],['4','5','6'],['7','8','9'],['0','.',t0.backspace]];
+    }else{
+      rows=[['7','8','9'],['4','5','6'],['1','2','3'],['0','.',t0.backspace]];
+    }
+    var h='<div class="kb-'+(S.keyboard==='dial'?'dial':'calc')+'">',r,i,k,cls,action;
+    for(r=0;r<rows.length;r++){h+='<div class="kb-row">';for(i=0;i<rows[r].length;i++){k=rows[r][i];cls='kb-key';action='';
+      if(k===t0.backspace)cls+=' kb-action';
+      action=(k===t0.backspace?'backspace':'');
+      h+='<button type="button" class="'+cls+'" data-kb="'+k.replace(/"/g,'&quot;')+'" data-action="'+action+'">'+k+'</button>';
+    }h+='</div>';}
+    h+='<button type="button" class="kb-key kb-action kb-submit kb-enter-full" data-kb="'+UI_CONFIG.submitKeyLabel.replace(/"/g,'&quot;')+'" data-action="enter">'+UI_CONFIG.submitKeyLabel+'</button>';
+    h+='</div>';box.innerHTML=h;
+    var keys=box.querySelectorAll('[data-kb]');for(i=0;i<keys.length;i++){keys[i].onclick=function(){var action=this.getAttribute('data-action'),k=this.getAttribute('data-kb');if(action==='enter')keyboardEnter();else if(action==='backspace')kbBackspace();else kbAdd(k);};}
+    var kb=$('practiceKeyboard');if(kb&&kb.className.indexOf('show')!==-1)document.documentElement.style.setProperty('--custom-kb-height',kb.offsetHeight+'px');
+  }
+  function kbAdd(ch){var el=S.activeInput;if(!el)return;var v=el.value||'';if(ch==='.'&&v.indexOf('.')!==-1)return;if(ch==='.'&&v==='')v='0';if(v.length>=12)return;el.value=v+ch;try{el.focus({preventScroll:true});}catch(e){}}
+  function kbBackspace(){var el=S.activeInput;if(!el)return;el.value=(el.value||'').slice(0,-1);try{el.focus({preventScroll:true});}catch(e){}}
+  function kbClear(){
+    var nodes=document.querySelectorAll('#question input'),i;
+    if(!nodes.length)return;
+    if(S.m==='tables'){for(i=0;i<nodes.length;i++)nodes[i].value='';}
+    else nodes[0].value='';
+    var el=S.activeInput||nodes[0];
+    try{el.focus({preventScroll:true});}catch(e){}
+  }
+  function keyboardEnter(){
+    var nodes=document.querySelectorAll('#question input'),i,idx=-1;
+    if(!nodes.length)return;
+    for(i=0;i<nodes.length;i++)if(nodes[i]===S.activeInput){idx=i;break;}
+    if(S.m==='tables' && nodes.length>1 && idx===0){
+      setActiveInput(nodes[1]);
+      return;
+    }
+    submitAnswer();
+  }
+
+  function submitAnswer(){
+    if(S.locked||(S.timer&&S.left<=0))return;
+    clearAnswerState();
+    var ok=false;
+    var userAnswer='';
+    if(S.m==='tables'){
+      var av=parseInt($('a').value||'0',10),bv=parseInt($('b').value||'0',10);
+      userAnswer=String($('a').value||'')+' × '+String($('b').value||'');
+      if(!av||!bv){feedback('⚠️ '+t().missing,0);markAnswerState(false);keepAnswerFocus();return;}
+      var i;for(i=0;i<S.pairs.length;i++)if(S.pairs[i][0]===av&&S.pairs[i][1]===bv){ok=true;break;}
+    }else{
+      var node=document.querySelector('#question input');
+      var raw=node&&node.value!==undefined?String(node.value).trim():'';
+      userAnswer=raw;
+      if(raw===''){feedback('⚠️ '+t().missing,0);markAnswerState(false);keepAnswerFocus();return;}
+      var v=Number(raw);
+      if(!Number.isFinite(v)){feedback('⚠️ '+t().missing,0);markAnswerState(false);keepAnswerFocus();return;}
+      ok=Math.abs(v-Number(S.target))<1e-9;
+    }
+    if(!S.answerHistory)S.answerHistory=[];
+    S.answerHistory.push({question:S.currentQuestionText||'',userAnswer:userAnswer,correctAnswer:S.currentAnswerText||String(S.target),ok:ok});
+    markAnswerState(ok);
+    if(ok){
+      S.c++;S.streak++;if(S.streak>S.bestStreakSession)S.bestStreakSession=S.streak;S.locked=true;
+      feedback('🎉 ✓ '+(t().rightMsg||t().correct),1);
+      stats();keepAnswerFocus();
+      window.setTimeout(function(){if(S.timer===0||S.left>0)newQ();},UI_CONFIG.feedbackDurationMs);
+    }else{
+      if(!S.wrongQuestions)S.wrongQuestions=[];
+      var seen=false,wi;for(wi=0;wi<S.wrongQuestions.length;wi++)if(S.wrongQuestions[wi].key===S.currentQuestionKey){seen=true;break;}
+      if(!seen)S.wrongQuestions.push({key:S.currentQuestionKey,question:S.currentQuestionText||'',answer:S.currentAnswerText||String(S.target)});
+      S.w++;S.streak=0;
+      feedback('❌ '+(t().wrongMsg||t().wrong)+' — Try again',0);
+      stats();
+      keepAnswerFocus();
+      if(S.wrongClearTimer)window.clearTimeout(S.wrongClearTimer);
+      S.wrongClearTimer=window.setTimeout(function(){
+        var nodes=document.querySelectorAll('#question input'),i;
+        for(i=0;i<nodes.length;i++){nodes[i].value='';nodes[i].classList.remove('answer-wrong','answer-correct');}
+        S.wrongClearTimer=null;
+        var el=S.activeInput||nodes[0];
+        if(el){try{el.focus({preventScroll:true});}catch(e){}}
+      },UI_CONFIG.wrongClearDelayMs);
+    }
+  }
+  function feedback(x,g){
+    var el=$('inlineFeedback');
+    if(el){el.className='feedback-slot';void el.offsetWidth;el.innerHTML=x;el.className='feedback-slot '+(g?'good':'bad');}
+    var global=$('feedback');if(global){global.innerHTML='';global.className='feedback';}
+  }
+  function keepAnswerFocus(){
+    var nodes=document.querySelectorAll('#question input');
+    if(nodes.length){try{nodes[0].focus({preventScroll:true});}catch(e){try{nodes[0].focus();}catch(e2){}}}
+    setTimeout(updateKeyboardPosition,80);
+    setTimeout(ensurePracticeControlsVisible,120);
+  }
+  function skip(){
+    if(S.locked)return;
+    S.streak=0;stats();
+    var q=S.currentQuestionText||'';
+    var a=S.currentAnswerText||String(S.target);
+    if(!S.skippedQuestions)S.skippedQuestions=[];
+    S.skippedQuestions.push({key:S.currentQuestionKey,question:q,answer:a});
+    if(!S.answerHistory)S.answerHistory=[];
+    S.answerHistory.push({question:q,userAnswer:'Skipped',correctAnswer:a,ok:false,skipped:true});
+    newQ();
+  }
+
+  function featureKey(){return 'cbAttempts_'+S.m;}
+  function getAttempts(){var raw=storeGet(featureKey());if(!raw)return [];try{var a=JSON.parse(raw);return Object.prototype.toString.call(a)==='[object Array]'?a:[];}catch(e){return [];}}
+  function globalHistoryKey(){return 'cbPracticeHistoryV35';}
+  function getGlobalHistory(){var raw=storeGet(globalHistoryKey());if(!raw)return [];try{var a=JSON.parse(raw);return Array.isArray(a)?a:[];}catch(e){return [];}}
+  function getBest(){var raw=storeGet('cbPersonalBestV35');if(!raw)return {};try{var x=JSON.parse(raw);return x&&typeof x==='object'?x:{};}catch(e){return {};}}
+  function saveBest(){
+    var all=getBest(),key=S.m,old=all[key]||{bestScore:0,bestAccuracy:0,bestStreak:0};
+    var attempted=S.c+S.w,acc=attempted?Math.round(S.c/attempted*100):0,score=S.c;
+    var isBestScore=score>old.bestScore;
+    old.bestScore=Math.max(old.bestScore,score);old.bestAccuracy=Math.max(old.bestAccuracy,acc);old.bestStreak=Math.max(old.bestStreak,S.bestStreakSession||0);all[key]=old;
+    try{storeSet('cbPersonalBestV35',JSON.stringify(all));}catch(e){}
+    return {data:old,isBestScore:isBestScore};
+  }
+  function saveAttempt(){
+    var arr=getAttempts();
+    var n=S.c+S.w, acc=n?Math.round(S.c/n*100):0;
+    var bestInfo=saveBest();
+    var attempt={module:S.m,correct:S.c,wrong:S.w,skipped:(S.skippedQuestions||[]).length,accuracy:acc,timer:S.timer,stamp:new Date().getTime(),bestStreak:S.bestStreakSession||0,answers:(S.answerHistory||[]).slice(-50),isBestScore:bestInfo.isBestScore};
+    arr.unshift(attempt);if(arr.length>5)arr=arr.slice(0,5);try{storeSet(featureKey(),JSON.stringify(arr));}catch(e){}
+    var global=getGlobalHistory();global.unshift(attempt);if(global.length>20)global=global.slice(0,20);try{storeSet(globalHistoryKey(),JSON.stringify(global));}catch(e){}
+    renderAttempts();renderHomeProgress();
+  }
+  function moduleLabel(key){return (M[key]&&M[key][1]&&(M[key][1][S.lang]||M[key][1].en))||key;}
+  function renderHomeProgress(){
+    var pc=$('progressContent'),rc=$('recentContent');if(!pc||!rc)return;
+    var all=getGlobalHistory(),best=getBest(),i,totalCorrect=0,totalWrong=0,totalSkipped=0,bestStreak=0,bestScore=0;
+    for(i=0;i<all.length;i++){totalCorrect+=Number(all[i].correct)||0;totalWrong+=Number(all[i].wrong)||0;totalSkipped+=Number(all[i].skipped)||0;bestStreak=Math.max(bestStreak,Number(all[i].bestStreak)||0);bestScore=Math.max(bestScore,Number(all[i].correct)||0);}
+    var acc=(totalCorrect+totalWrong)?Math.round(totalCorrect/(totalCorrect+totalWrong)*100):0;
+    pc.innerHTML='<div class="progress-grid"><div class="progress-stat"><b>'+totalCorrect+'</b><span>Total Correct</span></div><div class="progress-stat"><b>'+acc+'%</b><span>Overall Accuracy</span></div><div class="progress-stat"><b>🔥 '+bestStreak+'</b><span>Best Streak</span></div><div class="progress-stat"><b>🏆 '+bestScore+'</b><span>Best Score</span></div><div class="progress-stat progress-wide"><b>'+all.length+'</b><span>Saved Practice Sessions • '+totalSkipped+' Skipped</span></div></div>';
+    if(!all.length){rc.innerHTML='<div class="recent-empty">No practice history yet. Complete a timed practice to create your first record.</div>';return;}
+    var html='<div class="recent-list">';
+    for(i=0;i<Math.min(5,all.length);i++){var a=all[i],d=new Date(a.stamp||Date.now());html+='<div class="recent-row"><b>'+moduleLabel(a.module)+' • '+a.correct+' Correct • '+a.accuracy+'%</b><small>'+d.toLocaleString()+' • Wrong: '+a.wrong+' • Skipped: '+(a.skipped||0)+' • 🔥 '+(a.bestStreak||0)+'</small></div>';}
+    rc.innerHTML=html+'</div>';
+  }
+  function formatTime(sec){if(sec===0)return t().time+' Off';if(sec%60===0)return (sec/60)+' '+t().min;return Math.floor(sec/60)+' '+t().min+' '+(sec%60)+' '+t().sec;}
+  function renderAttempts(){
+    var card=$('attemptsCard'),arr=getAttempts(),html='<div class="attempts-head"><div class="attempts-title">'+t().attempts+'</div><span class="attempts-badge">'+arr.length+'/3</span></div>';
+    var allowRestart = S.resultsFromTimeUp && S.timer>0;
+    if(!arr.length){card.innerHTML=html+'<div class="help">'+t().noAttempts+'</div>'+(allowRestart?'<button class="btn primary" type="button" onclick="practiceAgainFromResults()">▶ '+t().restart+'</button>':'');return;}
+    var i,a,j,d,details;
+    for(i=0;i<arr.length;i++){
+      a=arr[i];details='';
+      if(a.answers&&a.answers.length){
+        details='<div class="attempt-details">';
+        for(j=0;j<a.answers.length;j++){
+          d=a.answers[j];
+          var userClass=d.skipped?'attempt-user-skipped':(d.ok?'attempt-answer':'attempt-user-wrong');var userText=d.skipped?'Skipped':('Your answer: '+d.userAnswer+(d.ok?' ✓':' ✗'));details+='<div class="attempt-detail"><b>Q'+(j+1)+'. '+d.question+'</b><br><span class="'+userClass+'">'+userText+'</span><br><span class="attempt-answer">Correct answer: '+d.correctAnswer+'</span></div>';
+        }
+        details+='<div class="attempt-hint">Tap again to hide details.</div></div>';
+      } else details='<div class="attempt-details"><div class="attempt-hint">Detailed answers are available for new attempts saved after this update.</div></div>';
+      html+='<div class="attempt-row" onclick="this.classList.toggle(\'open\')"><div class="attempt-num">'+(i+1)+'.</div><div class="attempt-main"><b>'+t().correct+' '+a.correct+' <span class="ok">✅</span> • '+t().wrong+' '+a.wrong+' <span class="badx">❌</span> • ⏭ '+(a.skipped||0)+' • 🔥 '+(a.bestStreak||0)+' • '+t().time+' '+formatTime(a.timer)+'</b><small>'+t().accuracy+': '+a.accuracy+'%'+(a.isBestScore?' <span class="attempt-best">🏆 New Best</span>':'')+' • Tap to view answers</small>'+details+'</div></div>';
+    }
+    card.innerHTML=html+(allowRestart?'<button class="btn primary" type="button" onclick="practiceAgainFromResults()">▶ '+t().restart+'</button>':'');
+  }
+  function finishTime(){
+    S.locked=true;stopTimer();hidePracticeKeyboard();S.resultsFromTimeUp=true;saveAttempt();
+    $('timeTitle').innerHTML=t().up;$('timeText').innerHTML=t().over;
+    var n=S.c+S.w,a=n?Math.round(S.c/n*100):0;
+    var wrongHtml='';
+    if(S.wrongQuestions&&S.wrongQuestions.length){
+      wrongHtml='<div class="timeup-wrong-list"><div class="timeup-wrong-title">❌ Wrong Questions — Correct Answers</div>';
+      for(var qi=0;qi<S.wrongQuestions.length;qi++){
+        var q=S.wrongQuestions[qi];
+        wrongHtml+='<div class="timeup-wrong-item"><div class="timeup-question">Q'+(qi+1)+'. '+q.question+'</div><div class="timeup-answer">✓ Correct Answer: '+q.answer+'</div></div>';
+      }
+      wrongHtml+='</div>';
+    } else wrongHtml='<div class="timeup-wrong-list"><div class="timeup-wrong-title">🎉 No wrong questions in this session!</div></div>';
+    var skippedHtml='';
+    if(S.skippedQuestions&&S.skippedQuestions.length){
+      skippedHtml='<div class="timeup-wrong-list timeup-skipped-list"><div class="timeup-wrong-title">⏭️ Skipped Questions — Correct Answers</div>';
+      for(var si=0;si<S.skippedQuestions.length;si++){
+        var sq=S.skippedQuestions[si];
+        skippedHtml+='<div class="timeup-wrong-item"><div class="timeup-question">Q'+(si+1)+'. '+sq.question+'</div><div class="timeup-answer">✓ Correct Answer: '+sq.answer+'</div></div>';
+      }
+      skippedHtml+='</div>';
+    }
+    $('timeResult').innerHTML='<div><b>'+t().correct+': '+S.c+' • '+t().wrong+': '+S.w+' • '+t().accuracy+': '+a+'%</b></div>'+wrongHtml+skippedHtml;
+    $('timeActions').innerHTML='<button class="btn primary" onclick="showTimeActions()" id="timeOk">'+t().ok+'</button>';
+    $('timeup').className='overlay show';
+  }
+  function showTimeActions(){var restart=S.timer>0?'<button class="btn primary" onclick="again()">▶ '+t().restart+'</button>':''; $('timeActions').innerHTML='<div class="grid"><button class="btn secondary" onclick="viewPreviousResults()">'+t().again+'</button>'+restart+'</div>';}
+  function viewPreviousResults(){
+    $('timeup').className='overlay';
+    hidePracticeKeyboard();
+    document.body.classList.add('results-preview');
+    renderAttempts();
+    var card=$('attemptsCard');
+    setTimeout(function(){if(card){try{card.scrollIntoView({behavior:'smooth',block:'start'});}catch(e){card.scrollIntoView();}}},60);
+  }
+  function practiceAgainFromResults(){
+    S.resultsFromTimeUp=false;
+    $('timeup').className='overlay';
+    document.body.classList.remove('results-preview');
+    hidePracticeKeyboard();
+    resetScore();
+    startTimer();
+    newQ();
+    renderAttempts();
+    setTimeout(function(){
+      var q=$('question');
+      if(q){try{q.scrollIntoView({behavior:'smooth',block:'center'});}catch(e){q.scrollIntoView();}}
+    },60);
+  }
+  function again(){S.resultsFromTimeUp=false;$('timeup').className='overlay';document.body.classList.remove('results-preview');hidePracticeKeyboard();resetScore();startTimer();newQ();renderAttempts();}
+
+  $('gate').onclick=function(e){if(e.target===$('gate'))closeGate();};$('profile').onclick=function(e){if(e.target===$('profile'))closeProfile();};
+  $('timeup').onclick=function(e){if(e.target===$('timeup')){$('timeup').className='overlay';document.body.classList.remove('results-preview');hidePracticeKeyboard();}};
+  window.onpopstate=function(){if($('gate').className.indexOf('show')!==-1){S.gateHistory=false;$('gate').className='overlay';}};
+  document.onkeydown=function(e){e=e||window.event;if(e.keyCode===27&&$('gate').className.indexOf('show')!==-1)closeGate();};
+
+  // Expose only required handlers for inline HTML attributes.
+  window.PRACTICE_ENGINE=PRACTICE_ENGINE;window.TOOL_REGISTRY=TOOL_REGISTRY;
+  window.openGate=openGate;window.closeGate=closeGate;window.startFromGate=startFromGate;window.openProfile=openProfile;window.closeProfile=closeProfile;window.saveProfile=saveProfile;window.goHome=goHome;window.practiceAgainFromResults=practiceAgainFromResults;
+  window.resetProfileDefaults=resetProfileDefaults;window.toggleTheme=toggleTheme;window.changeLang=changeLang;window.submitAnswer=submitAnswer;window.skip=skip;window.showTimeActions=showTimeActions;window.viewPreviousResults=viewPreviousResults;window.again=again;
+
+  function updateKeyboardPosition(){
+    var vv=window.visualViewport,offset=0,open=false;
+    if(vv){offset=Math.max(0,window.innerHeight-vv.height-vv.offsetTop);open=offset>120;}
+    document.documentElement.style.setProperty('--kb-offset',Math.round(offset)+'px');
+    var cls=document.body.className.replace(/\bkeyboard-open\b/g,'').replace(/\s{2,}/g,' ').replace(/^\s+|\s+$/g,'');
+    document.body.className=open?(cls?cls+' ':'')+'keyboard-open':cls;
+  }
+  if(window.visualViewport){
+    window.visualViewport.addEventListener('resize',function(){updateKeyboardPosition();setTimeout(ensurePracticeControlsVisible,80);});
+    window.visualViewport.addEventListener('scroll',function(){updateKeyboardPosition();setTimeout(ensurePracticeControlsVisible,30);});
+  }
+  window.addEventListener('resize',function(){updateKeyboardPosition();setTimeout(ensurePracticeControlsVisible,80);});
+  document.addEventListener('focusin',function(e){if(e.target&&e.target.tagName==='INPUT')setTimeout(updateKeyboardPosition,60);});
+  document.addEventListener('focusout',function(){setTimeout(updateKeyboardPosition,120);});
+  document.documentElement.style.setProperty('--actionbar-space', (UI_CONFIG.actionBarHeightPx+8)+'px');
+    document.documentElement.style.setProperty('--actionbar-height', UI_CONFIG.actionBarHeightPx+'px');
+    document.documentElement.style.setProperty('--stats-height', UI_CONFIG.statsHeightPx+'px');
+    document.documentElement.style.setProperty('--stats-gap', UI_CONFIG.statsGapPx+'px');document.documentElement.style.setProperty('--feedback-space', UI_CONFIG.feedbackHeightPx+'px');document.documentElement.style.setProperty('--feedback-gap', UI_CONFIG.feedbackGapPx+'px');
+updateKeyboardPosition();
+
+  // Load one shared profile/default-settings source before first render.
+  loadProfileDefaults();
+  $('profileName').textContent=UI_CONFIG.profileName||'My Profile';
+  // Initial state: Tables default 1–20.
+  if(!storeGet('cbTablesDefault20')){S.from=1;S.to=20;storeSet('cbTablesDefault20','1');} render();applyTheme();buildSettings();renderAttempts();renderHomeProgress();
+})();
+</script></body></html>
