@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Calculation Booster — Login / Sign Up</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{--bg:#f6f8fc;--card:#fff;--text:#111827;--muted:#64748b;--line:#e2e8f0;--p:#4f46e5;--p2:#7c3aed;--good:#16a34a;--bad:#dc2626;--soft:#eef2f7}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;min-height:100vh;display:grid;place-items:center;padding:20px}body.dark{--bg:#0b1020;--card:#111827;--text:#f8fafc;--muted:#aeb9cc;--line:#29364d;--soft:#172033}
+.card{width:min(100%,430px);background:var(--card);border:1px solid var(--line);border-radius:23px;padding:22px;box-shadow:0 18px 60px rgba(15,23,42,.12)}.logo{width:58px;height:58px;margin:0 auto 10px;display:grid;place-items:center;border-radius:18px;background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;font-size:28px}.brand{text-align:center}.brand h1{font-size:23px;margin:0}.brand p{font-size:11px;color:var(--muted);margin:5px 0 18px}.tabs{display:grid;grid-template-columns:1fr 1fr;gap:7px;background:var(--soft);padding:5px;border-radius:13px;margin-bottom:14px}.tab{border:0;background:transparent;color:var(--muted);border-radius:9px;padding:10px;font-weight:900;cursor:pointer}.tab.active{background:var(--card);color:var(--p);box-shadow:0 2px 8px rgba(15,23,42,.08)}.field{margin:11px 0}.field label{display:block;font-size:11px;font-weight:850;color:var(--muted);margin:0 0 6px 2px}input{width:100%;height:48px;border:2px solid var(--line);border-radius:13px;background:var(--card);color:var(--text);padding:0 12px;font:inherit;outline:0}input:focus{border-color:#818cf8;box-shadow:0 0 0 3px #6366f11c}.btn{width:100%;min-height:47px;border:0;border-radius:13px;font-weight:900;cursor:pointer;margin-top:9px}.primary{background:linear-gradient(135deg,var(--p),var(--p2));color:#fff}.secondary{background:var(--soft);color:var(--text);border:1px solid var(--line)}.status{font-size:12px;line-height:1.5;text-align:center;margin-top:10px;color:var(--muted)}.ok{color:var(--good)}.err{color:var(--bad)}.note{font-size:10px;color:var(--muted);line-height:1.5;text-align:center;margin-top:13px}.forgot{text-align:right;margin-top:7px}.forgot a{font-size:11px;color:var(--p);font-weight:850;text-decoration:none}.back{text-align:center;margin-top:14px}.back a{font-size:11px;color:var(--p);font-weight:850;text-decoration:none}
+</style>
+
+<style id="login-v82-enhancements">
+  :root{
+    color-scheme:light;
+    --bg:#f6f8fc;--card:#fff;--text:#111827;--muted:#64748b;
+    --line:#e2e8f0;--input:#fff;--soft:#f8fafc;
+  }
+  html.dark{
+    color-scheme:dark;
+    --bg:#0b1020;--card:#111827;--text:#eef2ff;--muted:#aeb9cc;
+    --line:#29364d;--input:#0c1322;--soft:#172033;
+  }
+  html,body{min-height:100%}
+  body{background:var(--bg)!important;color:var(--text)!important;transition:background .2s,color .2s}
+  .card,.login-card,.auth-card,form{background:var(--card)!important;color:var(--text)!important}
+  input,button,select,textarea{
+    font:inherit;
+  }
+  input{
+    background:var(--input)!important;
+    color:var(--text)!important;
+    border-color:var(--line)!important;
+  }
+  input::placeholder{color:var(--muted)}
+  label,.muted,.sub,.note,p{color:var(--muted)}
+  .password-wrap{position:relative}
+  .password-wrap input{padding-right:52px}
+  .password-toggle{
+    position:absolute;right:8px;top:50%;transform:translateY(-50%);
+    width:40px;height:40px;border:0;border-radius:10px;
+    background:transparent;color:var(--muted);cursor:pointer;
+    display:grid;place-items:center;font-size:18px;
+  }
+  .password-toggle:hover{background:var(--soft);color:var(--text)}
+  .theme-toggle{
+    position:fixed;top:14px;right:14px;z-index:20;
+    border:1px solid var(--line);background:var(--card);color:var(--text);
+    border-radius:12px;padding:9px 12px;font-weight:800;cursor:pointer;
+    box-shadow:0 4px 14px rgba(15,23,42,.08);
+  }
+  @media(max-width:620px){
+    .theme-toggle{top:10px;right:10px;padding:8px 10px}
+    body{overflow-x:hidden}
+    .card,.login-card,.auth-card,form{max-width:100%}
+    input,button,select,textarea{max-width:100%}
+  }
+  @media(min-width:621px){
+    body{display:flex;align-items:center;justify-content:center}
+  }
+  @media(prefers-reduced-motion:reduce){
+    *{scroll-behavior:auto!important;transition:none!important;animation:none!important}
+  }
+  .confirm-panel{text-align:center;padding:8px 4px 2px}
+  .confirm-icon{width:58px;height:58px;margin:0 auto 9px;display:grid;place-items:center;border-radius:18px;background:var(--soft);font-size:28px}
+  .confirm-panel h2{margin:0 0 6px;font-size:20px}
+  .confirm-panel p{margin:7px 0;color:var(--muted);font-size:12px;line-height:1.5}
+  .confirm-panel strong{display:block;word-break:break-word;font-size:13px;margin:8px 0;color:var(--text)}
+  .confirm-help{margin-bottom:10px!important}
+  .resend-status{min-height:18px;margin-top:8px;font-size:11px;color:var(--muted);line-height:1.4}
+  .btn:disabled{opacity:.55;cursor:not-allowed}
+</style>
+
+</head>
+<body>
+<button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark mode">🌙 Dark Mode</button>
+<div class="card">
+  <div class="logo">🔐</div>
+  <div class="brand"><h1>Calculation Booster</h1><p>Optional account login — Guest ID remains separate</p></div>
+  <div class="tabs"><button class="tab active" id="loginTab" type="button">Login</button><button class="tab" id="signupTab" type="button">Sign Up</button></div>
+  <div id="loginForm">
+    <div class="field"><label>Email</label><input id="loginEmail" type="email" autocomplete="email" placeholder="Your email"></div>
+    <div class="field"><label>Password</label><div class="password-wrap"><input id="loginPassword" type="password" autocomplete="current-password" placeholder="Your password"><button class="password-toggle" type="button" data-password-toggle aria-label="Show password" title="Show password">👁️</button></div></div>
+    <button class="btn primary" id="loginBtn" type="button">Login</button>
+    <div class="forgot"><a href="/reset-password.html">Forgot password?</a></div>
+  </div>
+  <div id="signupForm" hidden>
+    <div class="field"><label>Email</label><input id="signupEmail" type="email" autocomplete="email" placeholder="Your email"></div>
+    <div class="field"><label>Password</label><div class="password-wrap"><input id="signupPassword" type="password" autocomplete="new-password" placeholder="At least 6 characters"><button class="password-toggle" type="button" data-password-toggle aria-label="Show password" title="Show password">👁️</button></div></div>
+    <button class="btn primary" id="signupBtn" type="button">Create Account</button>
+  </div>
+  <div id="confirmPanel" hidden class="confirm-panel">
+    <div class="confirm-icon">📧</div>
+    <h2>Check your email</h2>
+    <p>Account created successfully. We sent a confirmation link to:</p>
+    <strong id="confirmEmail"></strong>
+    <p class="confirm-help">Open the email and tap <b>Confirm your email</b>. After confirmation, come back here and login.</p>
+    <button class="btn primary" id="goLoginBtn" type="button">Go to Login</button>
+    <button class="btn secondary" id="resendBtn" type="button">Resend confirmation email</button>
+    <div id="resendStatus" class="resend-status"></div>
+  </div>
+  <div class="status" id="status"></div>
+  <div class="note">Creating an account is optional. Your existing Guest ID remains separate. After login, your authenticated practice history can be synced to your account.</div>
+  <div class="back"><a id="backLink" href="/">← Back to Calculation Booster</a></div>
+</div>
+<script>
+const SUPABASE_URL='https://akmnecnvbcyjaforsijz.supabase.co';
+const SUPABASE_KEY='sb_publishable_p92ofrykqrrEx96BGB61Zw_BqsuDPHg';
+const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+const $=id=>document.getElementById(id);
+let resendTimer=null;
+function setStatus(text,type){$('status').textContent=text;$('status').className='status '+(type||'');}
+function returnUrl(){try{const p=new URLSearchParams(location.search).get('returnTo');return p||'/';}catch(e){return '/';}}
+function cleanEmail(v){return String(v||'').trim().toLowerCase();}
+function isEmailConfirmedError(error){
+  const m=String(error?.message||'').toLowerCase();
+  return m.includes('email not confirmed') || m.includes('email_not_confirmed');
+}
+function isAlreadyRegisteredError(error){
+  const m=String(error?.message||'').toLowerCase();
+  return m.includes('already registered') || m.includes('already been registered') || m.includes('user already registered') || m.includes('email already') || m.includes('already exists');
+}
+function switchMode(mode){
+  const login=mode==='login';
+  $('loginForm').hidden=!login;
+  $('signupForm').hidden=login;
+  $('confirmPanel').hidden=true;
+  $('loginTab').classList.toggle('active',login);
+  $('signupTab').classList.toggle('active',!login);
+  setStatus('');
+}
+function showConfirmation(email){
+  $('loginForm').hidden=true;
+  $('signupForm').hidden=true;
+  $('confirmPanel').hidden=false;
+  $('loginTab').classList.remove('active');
+  $('signupTab').classList.remove('active');
+  $('confirmEmail').textContent=email;
+  $('status').textContent='';
+  $('status').className='status';
+  $('resendStatus').textContent='';
+  startResendCooldown(60);
+}
+function startResendCooldown(seconds){
+  clearInterval(resendTimer);
+  let left=Number(seconds)||60;
+  const b=$('resendBtn');
+  b.disabled=true;
+  b.textContent='Resend in '+left+'s';
+  resendTimer=setInterval(()=>{
+    left--;
+    if(left<=0){
+      clearInterval(resendTimer);
+      b.disabled=false;
+      b.textContent='Resend confirmation email';
+    }else b.textContent='Resend in '+left+'s';
+  },1000);
+}
+async function sendConfirmation(email){
+  const {error}=await sb.auth.resend({type:'signup',email,options:{emailRedirectTo:location.origin+'/login.html'}});
+  if(error) throw error;
+}
+$('loginTab').onclick=()=>switchMode('login');
+$('signupTab').onclick=()=>switchMode('signup');
+$('goLoginBtn').onclick=()=>{
+  $('loginEmail').value=$('confirmEmail').textContent||$('signupEmail').value.trim();
+  $('loginPassword').value='';
+  switchMode('login');
+  setStatus('After confirming your email, enter your password and login.');
+};
+$('resendBtn').onclick=async()=>{
+  const email=$('confirmEmail').textContent.trim();
+  if(!email)return;
+  $('resendBtn').disabled=true;
+  $('resendStatus').textContent='Sending…';
+  try{
+    await sendConfirmation(email);
+    $('resendStatus').textContent='Confirmation email sent again. Check Inbox and Spam/Junk.';
+    startResendCooldown(60);
+  }catch(error){
+    $('resendStatus').textContent='Could not resend: '+(error?.message||'Please try again later.');
+    startResendCooldown(60);
+  }
+};
+$('loginBtn').onclick=async()=>{
+  const email=cleanEmail($('loginEmail').value),password=$('loginPassword').value;
+  if(!email||!password){setStatus('Email and password are required.','err');return;}
+  $('loginBtn').disabled=true;
+  setStatus('Signing in…');
+  try{
+    const {error}=await sb.auth.signInWithPassword({email,password});
+    if(!error){
+      setStatus('Login successful. Redirecting…','ok');
+      setTimeout(()=>location.href=returnUrl(),250);
+      return;
+    }
+    if(isEmailConfirmedError(error)){
+      $('resendBtn').disabled=false;
+      $('confirmEmail').textContent=email;
+      setStatus('Email not confirmed. Please confirm your email first.','err');
+      switchMode('login');
+      const old=$('loginBtn').textContent;
+      $('loginBtn').textContent='Resend confirmation email';
+      $('loginBtn').onclick=async()=>{
+        $('loginBtn').disabled=true;
+        try{
+          await sendConfirmation(email);
+          setStatus('Confirmation email sent again. Check Inbox and Spam/Junk.','ok');
+        }catch(e){setStatus('Could not resend: '+(e?.message||'Please try again later.'),'err');}
+        finally{
+          $('loginBtn').disabled=false;
+          $('loginBtn').textContent=old;
+        }
+      };
+      return;
+    }
+    // If the login email does not have an account, try creating one automatically.
+    // If it is an existing account, Supabase will reject the signup and we keep it as a login error.
+    if(String(error?.message||'').toLowerCase().includes('invalid login credentials')){
+      setStatus('No matching account found. Creating your account…');
+      const {data:signupData,error:signupError}=await sb.auth.signUp({
+        email,password,
+        options:{emailRedirectTo:location.origin+'/login.html'}
+      });
+      if(!signupError){
+        if(signupData?.session){
+          setStatus('Account created and logged in. Redirecting…','ok');
+          setTimeout(()=>location.href=returnUrl(),250);
+        }else{
+          showConfirmation(email);
+          setStatus('Account created. Please confirm your email.','ok');
+        }
+        return;
+      }
+      if(isAlreadyRegisteredError(signupError)){
+        setStatus('Login failed: email or password is incorrect. If you forgot the password, use “Forgot password?”.','err');
+      }else{
+        setStatus('Could not create account: '+signupError.message,'err');
+      }
+      return;
+    }
+    setStatus('Login failed: '+error.message,'err');
+  }finally{
+    $('loginBtn').disabled=false;
+  }
+};
+$('signupBtn').onclick=async()=>{
+  const email=cleanEmail($('signupEmail').value),password=$('signupPassword').value;
+  if(!email||!password){setStatus('Email and password are required.','err');return;}
+  if(password.length<6){setStatus('Password must be at least 6 characters.','err');return;}
+  $('signupBtn').disabled=true;
+  setStatus('Creating account…');
+  try{
+    const {data,error}=await sb.auth.signUp({email,password,options:{emailRedirectTo:location.origin+'/login.html'}});
+    if(error){
+      if(isAlreadyRegisteredError(error)){
+        $('loginEmail').value=email;
+        switchMode('login');
+        setStatus('This email already has an account. Please login instead.','err');
+      }else setStatus('Sign up failed: '+error.message,'err');
+      return;
+    }
+    if(data?.session){
+      setStatus('Account created. Redirecting…','ok');
+      setTimeout(()=>location.href=returnUrl(),250);
+    }else{
+      showConfirmation(email);
+      setStatus('Account created. Please confirm your email.','ok');
+    }
+  }finally{
+    $('signupBtn').disabled=false;
+  }
+};
+(function handleConfirmationReturn(){
+  try{
+    const hash=location.hash||'';
+    const params=new URLSearchParams(location.search);
+    const confirmed=params.get('confirmed');
+    if(confirmed==='1' || /type=recovery|access_token|code=/.test(hash)){
+      // Supabase normally establishes the session automatically after the confirmation link.
+      setTimeout(async()=>{
+        const {data}=await sb.auth.getSession();
+        if(data?.session){
+          setStatus('Email confirmed successfully. Redirecting…','ok');
+          setTimeout(()=>location.href=returnUrl(),350);
+        }else{
+          switchMode('login');
+          setStatus('Email confirmed. You can now login.','ok');
+        }
+      },350);
+    }
+  }catch(e){}
+})();
+</script>
+
+<script id="login-v82-enhancements-js">
+(function(){
+  "use strict";
+
+  var themeKey="cbLoginDarkMode";
+
+  function applyTheme(){
+    var saved=localStorage.getItem(themeKey);
+    var dark=saved==="1";
+    if(saved===null){
+      dark=window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+    }
+    document.documentElement.classList.toggle("dark",dark);
+    var b=document.getElementById("themeToggle");
+    if(b){
+      b.textContent=dark?"☀️ Light Mode":"🌙 Dark Mode";
+      b.setAttribute("aria-label",dark?"Switch to light mode":"Switch to dark mode");
+    }
+  }
+
+  document.addEventListener("click",function(e){
+    var theme=e.target.closest && e.target.closest("#themeToggle");
+    if(theme){
+      var isDark=document.documentElement.classList.contains("dark");
+      localStorage.setItem(themeKey,isDark?"0":"1");
+      applyTheme();
+      return;
+    }
+
+    var toggle=e.target.closest && e.target.closest("[data-password-toggle]");
+    if(toggle){
+      var wrap=toggle.closest(".password-wrap");
+      var input=wrap && wrap.querySelector("input");
+      if(!input)return;
+      var showing=input.type==="password";
+      input.type=showing?"text":"password";
+      toggle.textContent=showing?"🙈":"👁️";
+      toggle.setAttribute("aria-label",showing?"Hide password":"Show password");
+      toggle.setAttribute("title",showing?"Hide password":"Show password");
+    }
+  });
+
+  applyTheme();
+})();
+</script>
+
+</body>
+</html>
