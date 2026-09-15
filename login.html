@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Calculation Booster — Login / Sign Up</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{--bg:#f6f8fc;--card:#fff;--text:#111827;--muted:#64748b;--line:#e2e8f0;--p:#4f46e5;--p2:#7c3aed;--good:#16a34a;--bad:#dc2626;--soft:#eef2f7}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;min-height:100vh;display:grid;place-items:center;padding:20px}body.dark{--bg:#0b1020;--card:#111827;--text:#f8fafc;--muted:#aeb9cc;--line:#29364d;--soft:#172033}
+.card{width:min(100%,430px);background:var(--card);border:1px solid var(--line);border-radius:23px;padding:22px;box-shadow:0 18px 60px rgba(15,23,42,.12)}.logo{width:58px;height:58px;margin:0 auto 10px;display:grid;place-items:center;border-radius:18px;background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;font-size:28px}.brand{text-align:center}.brand h1{font-size:23px;margin:0}.brand p{font-size:11px;color:var(--muted);margin:5px 0 18px}.tabs{display:grid;grid-template-columns:1fr 1fr;gap:7px;background:var(--soft);padding:5px;border-radius:13px;margin-bottom:14px}.tab{border:0;background:transparent;color:var(--muted);border-radius:9px;padding:10px;font-weight:900;cursor:pointer}.tab.active{background:var(--card);color:var(--p);box-shadow:0 2px 8px rgba(15,23,42,.08)}.field{margin:11px 0}.field label{display:block;font-size:11px;font-weight:850;color:var(--muted);margin:0 0 6px 2px}input{width:100%;height:48px;border:2px solid var(--line);border-radius:13px;background:var(--card);color:var(--text);padding:0 12px;font:inherit;outline:0}input:focus{border-color:#818cf8;box-shadow:0 0 0 3px #6366f11c}.btn{width:100%;min-height:47px;border:0;border-radius:13px;font-weight:900;cursor:pointer;margin-top:9px}.primary{background:linear-gradient(135deg,var(--p),var(--p2));color:#fff}.secondary{background:var(--soft);color:var(--text);border:1px solid var(--line)}.status{font-size:12px;line-height:1.5;text-align:center;margin-top:10px;color:var(--muted)}.ok{color:var(--good)}.err{color:var(--bad)}.note{font-size:10px;color:var(--muted);line-height:1.5;text-align:center;margin-top:13px}.forgot{text-align:right;margin-top:7px}.forgot a{font-size:11px;color:var(--p);font-weight:850;text-decoration:none}.back{text-align:center;margin-top:14px}.back a{font-size:11px;color:var(--p);font-weight:850;text-decoration:none}
+
+  .btn:disabled{opacity:.58;cursor:not-allowed;filter:saturate(.55)}
+</style>
+
+<style id="login-v82-enhancements">
+  :root{
+    color-scheme:light;
+    --bg:#f6f8fc;--card:#fff;--text:#111827;--muted:#64748b;
+    --line:#e2e8f0;--input:#fff;--soft:#f8fafc;
+  }
+  html.dark{
+    color-scheme:dark;
+    --bg:#0b1020;--card:#111827;--text:#eef2ff;--muted:#aeb9cc;
+    --line:#29364d;--input:#0c1322;--soft:#172033;
+  }
+  html,body{min-height:100%}
+  body{background:var(--bg)!important;color:var(--text)!important;transition:background .2s,color .2s}
+  .card,.login-card,.auth-card,form{background:var(--card)!important;color:var(--text)!important}
+  input,button,select,textarea{
+    font:inherit;
+  }
+  input{
+    background:var(--input)!important;
+    color:var(--text)!important;
+    border-color:var(--line)!important;
+  }
+  input::placeholder{color:var(--muted)}
+  label,.muted,.sub,.note,p{color:var(--muted)}
+  .password-wrap{position:relative}
+  .password-wrap input{padding-right:52px}
+  .password-toggle{
+    position:absolute;right:8px;top:50%;transform:translateY(-50%);
+    width:40px;height:40px;border:0;border-radius:10px;
+    background:transparent;color:var(--muted);cursor:pointer;
+    display:grid;place-items:center;font-size:18px;
+  }
+  .password-toggle:hover{background:var(--soft);color:var(--text)}
+  .theme-toggle{
+    position:fixed;top:14px;right:14px;z-index:20;
+    border:1px solid var(--line);background:var(--card);color:var(--text);
+    border-radius:12px;padding:9px 12px;font-weight:800;cursor:pointer;
+    box-shadow:0 4px 14px rgba(15,23,42,.08);
+  }
+  @media(max-width:620px){
+    .theme-toggle{top:10px;right:10px;padding:8px 10px}
+    body{overflow-x:hidden}
+    .card,.login-card,.auth-card,form{max-width:100%}
+    input,button,select,textarea{max-width:100%}
+  }
+  @media(min-width:621px){
+    body{display:flex;align-items:center;justify-content:center}
+  }
+  @media(prefers-reduced-motion:reduce){
+    *{scroll-behavior:auto!important;transition:none!important;animation:none!important}
+  }
+  .confirm-panel{text-align:center;padding:8px 4px 2px}
+  .confirm-icon{width:58px;height:58px;margin:0 auto 9px;display:grid;place-items:center;border-radius:18px;background:var(--soft);font-size:28px}
+  .confirm-panel h2{margin:0 0 6px;font-size:20px}
+  .confirm-panel p{margin:7px 0;color:var(--muted);font-size:12px;line-height:1.5}
+  .confirm-panel strong{display:block;word-break:break-word;font-size:13px;margin:8px 0;color:var(--text)}
+  .confirm-help{margin-bottom:10px!important}
+  .resend-status{min-height:18px;margin-top:8px;font-size:11px;color:var(--muted);line-height:1.4}
+  .btn:disabled{opacity:.55;cursor:not-allowed}
+</style>
+
+</head>
+<body>
+<button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark mode">🌙 Dark Mode</button>
+<div class="card">
+  <div class="logo">🔐</div>
+  <div class="brand"><h1>Calculation Booster</h1><p>Optional account login — Guest ID remains separate</p></div>
+  <div class="notice">📌 <b>Email verification is not required for login.</b> Please enter the correct email address. If you ever forget your password, a password-reset link will be sent to this email.</div>
+  <div class="tabs"><button class="tab active" id="loginTab" type="button">Login</button><button class="tab" id="signupTab" type="button">Sign Up</button></div>
+  <div id="loginForm">
+    <div class="field"><label>Email</label><input id="loginEmail" type="email" autocomplete="email" placeholder="Your email"></div>
+    <div class="field"><label>Password</label><div class="password-wrap"><input id="loginPassword" type="password" autocomplete="current-password" placeholder="Your password"><button class="password-toggle" type="button" data-password-toggle aria-label="Show password" title="Show password">👁️</button></div></div>
+    <button class="btn primary" id="loginBtn" type="button">Login</button>
+    <div class="forgot"><a href="/reset-password.html">Forgot password?</a></div>
+  </div>
+  <div id="signupForm" hidden>
+    <div class="field"><label>Name</label><input id="signupName" type="text" autocomplete="name" maxlength="40" placeholder="Your name"></div>
+    <div class="field"><label>Email</label><input id="signupEmail" type="email" autocomplete="email" placeholder="Your email"></div>
+    <div class="field"><label>Password</label><div class="password-wrap"><input id="signupPassword" type="password" autocomplete="new-password" placeholder="At least 6 characters"><button class="password-toggle" type="button" data-password-toggle aria-label="Show password" title="Show password">👁️</button></div></div>
+    <button class="btn primary" id="signupBtn" type="button">Create Account</button>
+  </div>
+  <div id="confirmPanel" hidden class="confirm-panel">
+    <div class="confirm-icon">📧</div>
+    <h2>Check your email</h2>
+    <p>Account created successfully.</p>
+    <strong id="confirmEmail"></strong>
+    <p class="confirm-help">Your account is ready. You can login directly.</p>
+    <button class="btn primary" id="goLoginBtn" type="button">Go to Login</button>
+    <button class="btn secondary" id="resendBtn" type="button">Send confirmation email</button>
+    <div id="resendStatus" class="resend-status"></div>
+  </div>
+  <div class="status" id="status"></div>
+  <div class="note">Creating an account is optional. Your existing Guest ID remains separate. After login, your authenticated practice history can be synced to your account.</div>
+  <div class="back"><a id="backLink" href="/">← Back to Calculation Booster</a></div>
+</div>
+<script>
+const SUPABASE_URL='https://akmnecnvbcyjaforsijz.supabase.co';
+const SUPABASE_KEY='sb_publishable_p92ofrykqrrEx96BGB61Zw_BqsuDPHg';
+const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true,storageKey:'sb-akmnecnvbcyjaforsijz-auth-token'}});
+const $=id=>document.getElementById(id);
+let resendTimer=null;
+function setStatus(text,type){$('status').textContent=text;$('status').className='status '+(type||'');}
+function returnUrl(){try{const p=new URLSearchParams(location.search).get('returnTo');return p||'/';}catch(e){return '/';}}
+function cleanEmail(v){return String(v||'').trim().toLowerCase();}
+function isEmailConfirmedError(error){
+  const m=String(error?.message||'').toLowerCase();
+  return m.includes('email not confirmed') || m.includes('email_not_confirmed');
+}
+function isAlreadyRegisteredError(error){
+  const m=String(error?.message||'').toLowerCase();
+  return m.includes('already registered') || m.includes('already been registered') || m.includes('user already registered') || m.includes('email already') || m.includes('already exists');
+}
+function switchMode(mode){
+  const login=mode==='login';
+  $('loginForm').hidden=!login;
+  $('signupForm').hidden=login;
+  $('confirmPanel').hidden=true;
+  $('loginTab').classList.toggle('active',login);
+  $('signupTab').classList.toggle('active',!login);
+  setStatus('');
+}
+function showConfirmation(email){
+  $('loginForm').hidden=true;
+  $('signupForm').hidden=true;
+  $('confirmPanel').hidden=false;
+  $('loginTab').classList.remove('active');
+  $('signupTab').classList.remove('active');
+  $('confirmEmail').textContent=email;
+  $('status').textContent='';
+  $('status').className='status';
+  $('resendStatus').textContent='';
+  $('goLoginBtn').disabled=false;
+  const initialCooldown=getResendRemaining(email) || 60;
+  startPersistentResendCooldown(email,initialCooldown,$('resendBtn'));
+  try{localStorage.setItem('cbPendingConfirmationEmail',cleanEmail(email));localStorage.setItem('cbPendingConfirmationAt',String(Date.now()));}catch(e){}
+  watchConfirmation(email);
+}
+function startResendCooldown(seconds){
+  clearInterval(resendTimer);
+  let left=Math.max(1,Number(seconds)||60);
+  const b=$('resendBtn');
+  b.disabled=true;
+  b.textContent='Resend in '+left+'s';
+  resendTimer=setInterval(()=>{
+    left--;
+    if(left<=0){
+      clearInterval(resendTimer);
+      resendTimer=null;
+      b.disabled=false;
+      b.textContent='Send confirmation email';
+    }else b.textContent='Resend in '+left+'s';
+  },1000);
+}
+function clearPendingConfirmation(email){
+  try{
+    const e=cleanEmail(email);
+    if(e && cleanEmail(localStorage.getItem('cbPendingConfirmationEmail')||'')===e){
+      localStorage.removeItem('cbPendingConfirmationEmail');
+      localStorage.removeItem('cbPendingConfirmationAt');
+    }
+  }catch(e){}
+}
+function markEmailConfirmed(){
+  clearInterval(resendTimer);
+  resendTimer=null;
+  const b=$('resendBtn');
+  if(b){
+    b.disabled=true;
+    b.textContent='✓ Email confirmed';
+  }
+  clearPendingConfirmation($('confirmEmail')?.textContent||'');
+  const st=$('resendStatus');
+  if(st) st.textContent='Email confirmed. You can now login.';
+  const go=$('goLoginBtn');
+  if(go){ go.disabled=false; go.textContent='Continue to Login'; }
+}
+async function checkConfirmationStatus(email){
+  try{
+    const {data}=await sb.auth.getUser();
+    const user=data?.user;
+    if(user && cleanEmail(user.email)===cleanEmail(email) && user.email_confirmed_at){
+      markEmailConfirmed();
+      return true;
+    }
+  }catch(e){}
+  return false;
+}
+function watchConfirmation(email){
+  let stopped=false;
+  const timer=setInterval(async()=>{
+    if(stopped)return;
+    const confirmed=await checkConfirmationStatus(email);
+    if(confirmed){stopped=true;clearInterval(timer);}
+  },3000);
+  setTimeout(()=>{stopped=true;clearInterval(timer);},30*60*1000);
+}
+async function sendConfirmation(email){
+  const {error}=await sb.auth.resend({type:'signup',email,options:{emailRedirectTo:'https://sellzon.in/login.html'}});
+  if(error) throw error;
+}
+$('loginTab').onclick=()=>switchMode('login');
+$('signupTab').onclick=()=>switchMode('signup');
+$('goLoginBtn').disabled=false;
+$('goLoginBtn').onclick=()=>{
+  $('loginEmail').value=$('confirmEmail').textContent||$('signupEmail').value.trim();
+  $('loginPassword').value='';
+  switchMode('login');
+  setStatus('After confirming your email, enter your password and login.');
+};
+function resendKey(email){return 'cbConfirmResendUntil:'+cleanEmail(email).toLowerCase();}
+function getResendRemaining(email){
+  const until=Number(localStorage.getItem(resendKey(email))||0);
+  return Math.max(0,Math.ceil((until-Date.now())/1000));
+}
+function getPendingConfirmationEmail(){
+  try{return cleanEmail(localStorage.getItem('cbPendingConfirmationEmail')||'');}catch(e){return '';}
+}
+function hasPendingConfirmation(email){
+  return !!email && getPendingConfirmationEmail()===cleanEmail(email);
+}
+function saveResendCooldown(email,seconds){
+  localStorage.setItem(resendKey(email),String(Date.now()+seconds*1000));
+}
+function parseRateLimitSeconds(message){
+  const m=String(message||'').match(/(?:after|in)\s+(\d+)\s*seconds?/i);
+  return m?Math.max(30,Number(m[1])):60;
+}
+function startPersistentResendCooldown(email,seconds,button,statusEl){
+  saveResendCooldown(email,seconds);
+  button.disabled=true;
+  let left=seconds;
+  const tick=()=>{
+    left=getResendRemaining(email);
+    if(left<=0){button.disabled=false;button.textContent='Send confirmation email';return;}
+    button.textContent='Resend in '+left+'s';
+    setTimeout(tick,1000);
+  };
+  tick();
+}
+
+$('resendBtn').onclick=async()=>{
+  const email=$('confirmEmail').textContent.trim();
+  if(!email)return;
+  const remaining=getResendRemaining(email);
+  if(remaining>0){
+    $('resendStatus').textContent='Please wait '+remaining+' seconds before requesting another email.';
+    startPersistentResendCooldown(email,remaining,$('resendBtn'));
+    return;
+  }
+  $('resendBtn').disabled=true;
+  $('resendStatus').textContent='Sending…';
+  try{
+    await sendConfirmation(email);
+    $('resendStatus').textContent='Confirmation email sent again. Check Inbox and Spam/Junk.';
+    startPersistentResendCooldown(email,60,$('resendBtn'));
+  }catch(error){
+    const msg=error?.message||'Please try again later.';
+    const secs=parseRateLimitSeconds(msg);
+    $('resendStatus').textContent=/rate limit|security purposes|too many/i.test(msg)
+      ? 'Email service rate limit reached. Please wait '+secs+' seconds, then try again.'
+      : 'Could not resend: '+msg;
+    startPersistentResendCooldown(email,secs,$('resendBtn'));
+  }
+};
+(function restoreConfirmationCooldown(){
+  const email=cleanEmail($('confirmEmail')?.textContent||'');
+  const b=$('resendBtn');
+  if(email&&b){const left=getResendRemaining(email);if(left>0)startPersistentResendCooldown(email,left,b);}
+})();
+function fallbackNameFromEmail(email){
+  const local=String(email||'').split('@')[0].replace(/[._-]+/g,' ').trim();
+  return local ? local.replace(/\b\w/g,c=>c.toUpperCase()).slice(0,40) : 'User';
+}
+
+async function loginAction(){
+  const email=cleanEmail($('loginEmail').value),password=$('loginPassword').value;
+  if(!email||!password){setStatus('Email and password are required.','err');return;}
+  $('loginBtn').disabled=true;
+  setStatus('Signing in…');
+  try{
+    const {error}=await sb.auth.signInWithPassword({email,password});
+    if(!error){
+      clearPendingConfirmation(email);
+      setStatus('Login successful. Redirecting…','ok');
+      setTimeout(()=>location.href=returnUrl(),250);
+      return;
+    }
+    if(isEmailConfirmedError(error)){
+      setStatus('Email verification is currently required in Supabase. Please disable Confirm Email in Authentication settings, then try again.','err');
+      let resend=$('loginResend');
+      if(!resend){
+        resend=document.createElement('button');
+        resend.id='loginResend';
+        resend.type='button';
+        resend.className='btn secondary';
+        resend.textContent='Send confirmation email';
+        $('loginForm').appendChild(resend);
+        resend.onclick=async()=>{
+          resend.disabled=true;
+          setStatus('Sending confirmation email…');
+          const remaining=getResendRemaining(email);
+          if(remaining>0){setStatus('Please wait '+remaining+' seconds before requesting another email.','err');startPersistentResendCooldown(email,remaining,resend);return;}
+          try{
+            await sendConfirmation(email);
+            setStatus('Confirmation email sent again. Check Inbox and Spam/Junk.','ok');
+            startPersistentResendCooldown(email,60,resend);
+          }catch(e){
+            const msg=e?.message||'Please try again later.';
+            const secs=parseRateLimitSeconds(msg);
+            setStatus(/rate limit|security purposes|too many/i.test(msg)?'Email service rate limit reached. Please wait '+secs+' seconds, then try again.':'Could not resend: '+msg,'err');
+            startPersistentResendCooldown(email,secs,resend);
+          }
+        };
+      }
+      const existingRemaining=getResendRemaining(email);
+      if(existingRemaining>0) startPersistentResendCooldown(email,existingRemaining,resend);
+      watchConfirmation(email);
+      return;
+    }
+    // A previously-created but unconfirmed account must NEVER trigger another sign-up.
+    // This prevents repeated login attempts from consuming the project email quota.
+    if(String(error?.message||'').toLowerCase().includes('invalid login credentials')){
+      if(hasPendingConfirmation(email)){
+        showConfirmation(email);
+        setStatus('No valid login found for this email. If the account already exists, use “Forgot password?” to set a new password.','err');
+        return;
+      }
+
+      setStatus('No matching account found. Creating your account…');
+      const autoName=fallbackNameFromEmail(email);
+      const {data:signupData,error:signupError}=await sb.auth.signUp({
+        email,password,
+        options:{emailRedirectTo:'https://sellzon.in/login.html',data:{full_name:autoName,name:autoName}}
+      });
+      if(!signupError){
+        const identities=signupData?.user?.identities;
+        const looksLikeExistingAccount=Array.isArray(identities) && identities.length===0;
+        if(looksLikeExistingAccount){
+          // Supabase can hide whether an account exists. Do not retry sign-up.
+          setStatus('This email already has an account, but the password is incorrect. Use “Forgot password?” if needed.','err');
+          return;
+        }
+        if(signupData?.session){
+          clearPendingConfirmation(email);
+          setStatus('Account created and logged in. Redirecting…','ok');
+          setTimeout(()=>location.href=returnUrl(),250);
+        }else{
+          showConfirmation(email);
+          setStatus('Account created. You can now login directly with your email and password.','ok');
+        }
+        return;
+      }
+      if(isAlreadyRegisteredError(signupError)){
+        // Never call signUp again automatically for this email.
+        setStatus('This email already has an account. Please login with its password or use “Forgot password?”.','err');
+      }else if(/rate limit|too many|email.*hour|over_email_send_rate_limit/i.test(String(signupError?.message||''))){
+        setStatus('Email sending is temporarily rate-limited by Supabase. Please wait before trying another signup.','err');
+      }else{
+        setStatus('Could not create account: '+signupError.message,'err');
+      }
+      return;
+    }
+    setStatus('Login failed: '+error.message,'err');
+  }finally{
+    $('loginBtn').disabled=false;
+  }
+}
+$('loginBtn').onclick=loginAction;
+$('signupBtn').onclick=async()=>{
+  const name=String($('signupName')?.value||'').trim().slice(0,40);
+  const email=cleanEmail($('signupEmail').value),password=$('signupPassword').value;
+  if(!name){setStatus('Please enter your name.','err');return;}
+  if(!email||!password){setStatus('Email and password are required.','err');return;}
+  if(password.length<6){setStatus('Password must be at least 6 characters.','err');return;}
+  if(hasPendingConfirmation(email)){
+    showConfirmation(email);
+    setStatus('This email already has a pending confirmation. Please confirm it instead of creating the account again.','err');
+    return;
+  }
+  $('signupBtn').disabled=true;
+  setStatus('Creating account…');
+  try{
+    const {data,error}=await sb.auth.signUp({email,password,options:{emailRedirectTo:'https://sellzon.in/login.html',data:{full_name:name,name:name}}});
+    if(error){
+      if(isAlreadyRegisteredError(error)){
+        $('loginEmail').value=email;
+        switchMode('login');
+        setStatus('This email already has an account. Please login instead.','err');
+      }else setStatus('Sign up failed: '+error.message,'err');
+      return;
+    }
+    if(data?.session){
+      clearPendingConfirmation(email);
+      setStatus('Account created and logged in. Redirecting…','ok');
+      setTimeout(()=>location.href=returnUrl(),250);
+    }else{
+      // With Confirm Email disabled, Supabase should return a session.
+      // If it does not, the dashboard setting has not been changed yet.
+      clearPendingConfirmation(email);
+      $('loginEmail').value=email;
+      switchMode('login');
+      setStatus('Account created. Please login. Email confirmation is not required for this site.','ok');
+    }
+  }finally{
+    $('signupBtn').disabled=false;
+  }
+};
+(function clearLegacyConfirmationState(){
+  try{
+    localStorage.removeItem('cbPendingConfirmationEmail');
+    localStorage.removeItem('cbPendingConfirmationAt');
+  }catch(e){}
+})();
+(function handleConfirmationReturn(){
+  try{
+    const hash=location.hash||'';
+    const params=new URLSearchParams(location.search);
+    const confirmed=params.get('confirmed');
+    if(confirmed==='1' || /type=recovery|access_token|code=/.test(hash)){
+      // Supabase normally establishes the session automatically after the confirmation link.
+      setTimeout(async()=>{
+        const {data}=await sb.auth.getSession();
+        if(data?.session){
+          setStatus('Email confirmed successfully. Redirecting…','ok');
+          setTimeout(()=>location.href=returnUrl(),350);
+        }else{
+          switchMode('login');
+          setStatus('Email confirmed. You can now login.','ok');
+        }
+      },350);
+    }
+  }catch(e){}
+})();
+</script>
+
+<script id="login-v82-enhancements-js">
+(function(){
+  "use strict";
+
+  var themeKey="cbLoginDarkMode";
+
+  function applyTheme(){
+    var saved=localStorage.getItem(themeKey);
+    var dark=saved==="1";
+    if(saved===null){
+      dark=window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+    }
+    document.documentElement.classList.toggle("dark",dark);
+    var b=document.getElementById("themeToggle");
+    if(b){
+      b.textContent=dark?"☀️ Light Mode":"🌙 Dark Mode";
+      b.setAttribute("aria-label",dark?"Switch to light mode":"Switch to dark mode");
+    }
+  }
+
+  document.addEventListener("click",function(e){
+    var theme=e.target.closest && e.target.closest("#themeToggle");
+    if(theme){
+      var isDark=document.documentElement.classList.contains("dark");
+      localStorage.setItem(themeKey,isDark?"0":"1");
+      applyTheme();
+      return;
+    }
+
+    var toggle=e.target.closest && e.target.closest("[data-password-toggle]");
+    if(toggle){
+      var wrap=toggle.closest(".password-wrap");
+      var input=wrap && wrap.querySelector("input");
+      if(!input)return;
+      var showing=input.type==="password";
+      input.type=showing?"text":"password";
+      toggle.textContent=showing?"🙈":"👁️";
+      toggle.setAttribute("aria-label",showing?"Hide password":"Show password");
+      toggle.setAttribute("title",showing?"Hide password":"Show password");
+    }
+  });
+
+  applyTheme();
+})();
+</script>
+
+</body>
+</html>
